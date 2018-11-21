@@ -1,0 +1,31 @@
+.search-card {
+	background:  #ededed !important;
+}
+
+.inverted  {
+	background:  #ededed !important;
+	text-color: #23405f !important;
+}
+
+.list-group-item {
+	padding: 6px !important;
+}
+
+.btn-custom {
+	background: #23405f !important;
+	color: white !important;
+}
+
+.bg-custom {
+	background: #23405f !important;
+	color: white !important;
+}
+
+.bg-attention {
+	background: lightgreen !important;
+	color: #23405f !important;
+}
+
+.max-nine-sixty {
+	max-width: 960px;
+}

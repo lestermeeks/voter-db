@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .row
+        .col-sm
+            .card.mb-2
+                .card-header
+                    h5
+                        i.fa.fa-map.fa-fw()   
+                        | &nbsp;Washington State:  40%
+                .card-body
+                    .progress
+                        .progress-bar(role="progressbar", style="width: 40%", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100")
+                    p.mt-2 Washington state voter turnout was 40% overall in the primary election.
+        .col-sm
+            .card.mb-2
+                .card-header
+                    h5
+                        i.fa.fa-map-marker.fa-fw()   
+                        | &nbsp;Whatcom County:  45%
+                .card-body
+                    .progress
+                        .progress-bar.bg-success(role="progressbar", style="width: 45%", aria-valuenow="45", aria-valuemin="0", aria-valuemax="100")
+                    p.mt-2 Whatcom County voter turnout of the primary election exceeded the state average of 40%.

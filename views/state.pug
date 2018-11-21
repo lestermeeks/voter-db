@@ -1,0 +1,72 @@
+extends layout
+
+block content
+                    
+    .row
+        .col-sm
+            .card.mb-2
+                .card-header.text-center
+                    .card-title
+                        h5 Washington Election Stats
+                        h6 (as of #{as_of})
+
+                if state_stats
+                    .list-group.list-group-flush
+                        .list-group-item
+                            span Registered Voters:
+                            span.float-right #{state_stats.v_count_format}
+                        .list-group-item
+                            span Ballots Received:
+                            span.float-right #{state_stats.b_count_format}
+                        .list-group-item
+                            span Turnout:
+                            span.float-right #{state_stats.turnout}%
+                            //.progress
+                                .progress-bar(role="progressbar", style="width: 41%", aria-valuenow="41", aria-valuemin="0", aria-valuemax="100")
+                else
+                    .list-group-item.text-center
+                        span No Current Election Stats
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Search Washington State Voters
+                .card-body
+                    p Enter all or part of a Washington State voter's first and/or last name to see their record.
+                    form(action='/voter/wa/search')
+                        .input-group.mb-2
+                            .input-group-prepend
+                                span.input-group-text First
+                            input.form-control(type='text', placeholder='first name' name='fname')
+                        .input-group.mb-2
+                            .input-group-prepend
+                                span.input-group-text Last  
+                            input.form-control(type='text', placeholder='last name' name='lname')
+                        button.btn.btn-primary.btn-block(type='submit') Search
+
+
+
+
+            //.card.mb-2
+                .card-header
+                    .card-title
+                        h5
+                            i.fa.fa-map.fa-fw()   
+                            | &nbsp;Washington State:  41%
+                .card-body
+                    p Washington state voter turnout was 41% overall in the primary election.
+                    .progress
+                        .progress-bar(role="progressbar", style="width: 41%", aria-valuenow="41", aria-valuemin="0", aria-valuemax="100")
+        .col-sm
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Current Voter Turnout By County
+                        h6.text-center (Click County To See More)
+                if state_stats
+                    each county in state_stats.counties
+                        a.list-group-item.list-group-item-action(href='/voter/wa/' +county.code.toLowerCase())  #{county.name} county turnout is #{county.turnout}% so far.
+                            .progress(style="height: 20px;")
+                                .progress-bar.bg-primary(role="progressbar", style="width: "+county.turnout+"%", aria-valuenow=county.turnout, aria-valuemin="0", aria-valuemax="100")
+                else
+                    .list-group-item.text-center
+                        span No Current Election Stats

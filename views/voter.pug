@@ -1,0 +1,153 @@
+extends layout
+
+block content
+    .row
+        .col-md
+
+        
+            .card.mb-2
+                if voter._ballot_status
+                    img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
+                else
+                    img.card-img-top(src="/img/vote-2018-midterm-small.jpg" alt="Vote Image")
+
+
+                .card-body.bg-primary.text-light.text-center
+                    h4 #{voter.fname} #{voter.lname}
+                    
+                    if voter._ballot_status
+                        h5 Thank You For Voting!
+                        if(voter.bstatus)
+                            h6 Ballot: #{voter.bstatus.status} on #{voter.bstatus.sdate}
+                            if(voter.bstatus.comment  && voter.bstatus.status != 'Accepted')
+                                h6 Auditor Comment: #{voter.bstatus.comment}
+                        else
+                            h6 (Ballot Status: #{voter._ballot_status})
+                    else
+                        h5 We are still waiting for your ballot!
+
+            .card.mb-2
+                .list-group.list-group-flush
+                    a.list-group-item.list-group-item-action.list-group-item-success.text-center(role="button", target="_blank" href="https://weiapplets.sos.wa.gov/myvote") 
+                        h5 Check MyVote Official Status
+                        //span.fa.fa-check.float-right
+                        span.small
+                            | This site uses public records from the state to estimate your ballot status.  Make sure you double check with your county auditor
+                            | or washington state's official website, just click here!
+                             
+                    a.list-group-item.list-group-item-action.list-group-item-info(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
+                        span Share your voting record on Facebook
+                        h5.fab.fa-facebook-f.float-right
+
+                    a.list-group-item.list-group-item-action.list-group-item-secondary(role="button", href="https://www.votewashington.info/")
+                        span Search for other Washington state voters!
+                        span.fa.fa-search.float-right
+
+            .card.mb-2
+                .card-header.text-center
+                    .card-title
+                        h5 Major Election Status
+                        
+                .list-group.list-group-flush
+                    each election in voter._elections_past
+                        .list-group-item
+                            span.align-middle #{election.desc}
+                            if election.status === true
+                                h4.fa.fa-smile.fa-fw.text-success.float-right
+                                //span.float-right Voted
+                            else if election.status
+                                if election.status.status == 'Accepted'
+                                    h4.fa.fa-smile.fa-fw.text-success.float-right
+                                else
+                                    span.float-right #{election.status.status} 
+                            else
+                                h4.fa.fa-meh.fa-fw.text-warning.float-right
+                                //span.float-right Not Found
+
+
+        .col-md
+            .card.mb-2
+                .card-header.text-center
+                    .card-title
+                        h5 Current Election Info
+                        h6 (as of #{as_of})
+                
+                .list-group.list-group-flush
+                    .list-group-item
+                        h6 
+                            i.fa.fa-map.fa-fw
+                            | &nbsp;Washington State:  
+                            span.float-right #{state_stats.turnout}%
+                    .list-group-item
+                        h6
+                            i.fa.fa-map-marker.fa-fw()   
+                            | &nbsp;#{county.name} County:
+                            span.float-right #{county.turnout}%
+                    .list-group-item
+                        h6
+                            i.fa.fa-street-view.fa-fw()   
+                            | &nbsp;Precinct #{voter.pc}:
+                            span.float-right #{pc_turnout}%
+                    .list-group-item
+                        h6
+                            i.fa.fa-car.fa-fw()   
+                            span Street #{voter.street}:
+                            span.float-right #{street_turnout}%
+
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Related Voters in #{county.name} County
+                        h6.text-center (Click on item to explore)
+                
+                .list-group.list-group-flush
+                    a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase())
+                        span Same County:
+                        span.float-right #{county.name}
+                    a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase()+'/name/'+voter.lname.toLowerCase())
+                        span Same Last Name:
+                        span.float-right #{voter.lname}
+                    a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/street/'+voter.zip.toLowerCase()+'/'+voter.street.toLowerCase())
+                        span Same Street:
+                        span.float-right #{voter.street}
+                    a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/precinct/'+voter.pc.toLowerCase())
+                        span Same Precinct
+                        span.float-right #{voter.pc}
+                    .list-group-item.disabled
+                        span Same City:
+                        span.float-right #{voter.city}
+                    .list-group-item.disabled
+                        span Legislative District:
+                        span.float-right #{voter.ld}
+                    .list-group-item.disabled
+                        span Congressional District:
+                        span.float-right #{voter.cd}
+
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Other Voter Info
+                .list-group.list-group-flush
+                    .list-group-item.disabled
+                        span Voter ID: 
+                        span.float-right #{voter._id}
+                    .list-group-item.disabled
+                        span Registered:
+                        span.float-right #{voter.reg} 
+                    .list-group-item.disabled
+                        span Last Voted: 
+                        span.float-right #{voter.voted}
+                    .list-group-item.disabled
+                        span Status:
+                        span.float-right #{voter.status}
+ 
+
+
+
+
+
+
+   
+   
+
+

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+                    
+    .row
+        .col-sm
+            .card.mb-2
+                .card-header.text-center
+                    .card-title
+                        h5 #{county.name} County Current Results
+                        h6 (as of #{as_of})
+
+                .list-group-item 
+                    span Total Registered Voters:
+                    span.float-right #{county.v_count} (Rank #{county.voter_rank})
+                .list-group-item 
+                    span Total Ballots Counted:
+                    span.float-right #{county.b_count}
+                .list-group-item 
+                    span County Turnout Percentage:
+                    span.float-right #{county.turnout}% (Rank #{county.turnout_rank})
+                //.list-group-item 
+                    span.align-middle State Wide Turnout Percentage:
+                    span.float-right 41%
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Search #{county.name} County Voters
+                .card-body
+                    p Enter all or part of a #{county.name} county voter's first and/or last name to see their record.
+                    form(action='/voter/wa/' + county.code.toLowerCase() + '/search')
+                        .input-group.mb-2
+                            .input-group-prepend
+                                span.input-group-text First
+                            input.form-control(type='text', placeholder='first name' name='fname')
+                        .input-group.mb-2
+                            .input-group-prepend
+                                span.input-group-text Last  
+                            input.form-control(type='text', placeholder='last name' name='lname')
+                        button.btn.btn-primary.btn-block(type='submit') Search
+
+
+        .col-sm
+            .card.mb-2
+                .card-header
+                    .card-title
+                        h5.text-center Current Voter Turnout By Precinct
+                        h6.text-center (Click County To See More)
+                if county && county.precincts
+                    each precinct in county.precincts
+                        a.list-group-item.list-group-item-action(href='/voter/wa/' +county.code.toLowerCase() + '/precinct/'+precinct.code) Precinct #{precinct.code} turnout is #{precinct.turnout}% so far.
+                            .progress(style="height: 20px;")
+                                .progress-bar.bg-primary(role="progressbar", style="width: "+precinct.turnout+"%", aria-valuenow=precinct.turnout, aria-valuemin="0", aria-valuemax="100")
+                else
+                    .list-group-item.text-center
+                        span No Current Election Stats
+
+
+
