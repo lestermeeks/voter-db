@@ -10,11 +10,14 @@ var app_settings, open_graph, site_settings;
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
 	app_settings = req.app.get('app_settings');
+
+	var redirect_protocol = (process.env.REDIRECT_PROTOCOL || 'http://');
+
 	site_settings = {
-		fullUrl: 'https://' + req.get('host') + req.originalUrl
+		fullUrl: redirect_protocol + req.get('host') + req.originalUrl
 	};
 	
-	
+	/*
 	if (req.headers.host != 'www.votewashington.info'){
 		//catch our old website names and redirect them in to votewashington with lower case url
 		res.redirect('https://www.votewashington.info' + req.originalUrl.toLowerCase());
@@ -23,7 +26,7 @@ router.use(function timeLog (req, res, next) {
 		//if we have an upper case url redirect it to lower
 		res.redirect(site_settings.fullUrl.toLowerCase());
 	}else{
-
+	*/
 		if (req.headers.host == 'www.votewashington.info'){
 			//our primary site
 			site_settings.name = 'Vote Washington';
@@ -47,8 +50,9 @@ router.use(function timeLog (req, res, next) {
 		};
 
 		next();
-	  	
+	/*  	
   	}
+  	*/
 })
 
 router.get('/', function(req,res){
