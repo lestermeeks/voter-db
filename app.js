@@ -251,7 +251,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use('/stylesheets/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/'));
 app.use(express.static(path.join(__dirname, 'public')));
-
+/*
 app.get('*',function(req,res,next){
 	//console.log(req.app.get('env'));
 	if(req.app.get('env') !== 'development' && req.headers['x-forwarded-proto']!='https')
@@ -259,14 +259,14 @@ app.get('*',function(req,res,next){
 	else
 		next();
 });
-
+*/
 app.get('/', function(req,res){ 
 	res.redirect('/voter');
 });
 
 
-app.use('/api/v1', apiRouter);
-app.use('/frame', frameRouter);
+//app.use('/api/v1', apiRouter);
+//app.use('/frame', frameRouter);
 app.use('/voter', voterRouter);
 
 
@@ -285,7 +285,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-  // ... start the server
+  /* ... start the server
 var processStats = false;
 var updateTick = 360; //15 mins
 var workingStats = null;
@@ -391,6 +391,6 @@ function updateStats(arg) {
 }
 
 
-//setInterval(updateStats, 2500, app_settings);
-
+setInterval(updateStats, 2500, app_settings);
+*/
 module.exports = app;
