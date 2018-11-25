@@ -8,38 +8,32 @@ block content
 
         .list-group.list-group-flush
             each voter in voters
-                if voter._ballot_status == "Accepted"
-                    a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/id/'+voter._id.toLowerCase()) 
-                        h3.fa.fa-thumbs-up.fa-fw.float-right
-                        .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                        .ml-2.small #{voter.street} #{voter.city}
-                        if(voter.bstatus)
+                if voter.bstatus
+                    if voter.bstatus.status == "Accepted"
+                        a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/id/'+voter._id.toLowerCase()) 
+                            h3.fa.fa-thumbs-up.fa-fw.float-right
+                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+                            .ml-2.small #{voter.street} #{voter.city}
                             .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
                             //.ml-2.small Auditor Comment: #{voter.bstatus.comment}
-                        else
-                            .ml-2.small Ballot Status: #{voter._ballot_status}
-                else if voter._ballot_status == "Received"
-                    a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/id/'+voter._id.toLowerCase()) 
-                        h3.fa.fa-fw.float-right
-                        .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                        .ml-2.small #{voter.street} #{voter.city}
-                        if(voter.bstatus)
+
+                    else if voter.bstatus.status == "Received"
+                        a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/id/'+voter._id.toLowerCase()) 
+                            h3.fa.fa-fw.float-right
+                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+                            .ml-2.small #{voter.street} #{voter.city}
                             .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
                             if(voter.bstatus.comment)
                                 .ml-2.small Auditor Comment: #{voter.bstatus.comment}
-                        else
-                            .ml-2.small Ballot Status: #{voter._ballot_status}
-                else if voter._ballot_status == "Challenged"
-                    a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/id/'+voter._id.toLowerCase()) 
-                        h3.fa.fa-thumbs-down.fa-fw.float-right
-                        .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                        .ml-2.small #{voter.street} #{voter.city}
-                        if(voter.bstatus)
+
+                    else if voter.bstatus.status == "Challenged"
+                        a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/id/'+voter._id.toLowerCase()) 
+                            h3.fa.fa-thumbs-down.fa-fw.float-right
+                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+                            .ml-2.small #{voter.street} #{voter.city}
                             .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
                             if(voter.bstatus.comment)
                                 .ml-2.small Auditor Comment: #{voter.bstatus.comment}
-                        else
-                            .ml-2.small Ballot Status: #{voter._ballot_status}
                 else
                     a.list-group-item.list-group-item-action(href='/voter/id/'+voter._id.toLowerCase()) 
                         h3.fa.fa-fw.float-right

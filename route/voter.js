@@ -105,9 +105,14 @@ router.get('/wa/id/:id', function(req,res){
 			//none found
 			res.render('voter_not_found', { title: site_settings.name});
 		} else {
+
+						//set status for this voter
+			voter_utilities.setVoterStatus(voters, app_settings.elections);
+
 			//render the first one... id is unique don't wast time checking for multiples
 			var voter = voters[0];
 			
+			//console.log(util.inspect(voter));
 			//var app_settings = req.app.get('app_settings');
 			var county = {};
 			app_settings.stats.counties.forEach(function(county_loop){
@@ -116,8 +121,7 @@ router.get('/wa/id/:id', function(req,res){
 		  		}
 		  	});
 
-			//set status for this voter
-			voter_utilities.setVoterStatus(voters, app_settings.elections);
+
 
 
 			//fill in some basic precinct and street turnout data
@@ -129,7 +133,7 @@ router.get('/wa/id/:id', function(req,res){
 				neighbors = [];
 				precinct_voters.forEach(function(precinct_voter) {
 
-					if(precinct_voter.ballot)
+					if(precinct_voter.bstatus)
 					{
 						pc_current++;
 					}
@@ -137,7 +141,7 @@ router.get('/wa/id/:id', function(req,res){
 					if (precinct_voter.street == voters[0].street)
 					{
 						neighbors.push(precinct_voter);
-						if(precinct_voter.ballot)
+						if(precinct_voter.bstatus)
 						{
 							street_current++;
 						}
@@ -154,7 +158,7 @@ router.get('/wa/id/:id', function(req,res){
 		      		
 				open_graph.title = site_settings.name + ' Voter History: ' + voter.name;
 				open_graph.desc = 'Washington State Voter History for ' + voter.name;
-				if (voter._ballot_status){
+				if (voter.bstatus){
                     //img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
                     open_graph.img = 'https://' + req.headers.host + '/img/voted-2018-midterm-small.jpg';
 				}

@@ -17,7 +17,7 @@ function findElectionStatus(date, voter){
         //'2018-11-06' hard coded for now, should compar this with settings though.
         if(date == '2018-11-06')
         {
-            if(voter.ballot)
+            if(voter.bstatus)
                 return true;
             else
                 return false;
@@ -35,7 +35,7 @@ function findElectionStatus(date, voter){
 
 function getBallotStatus(voter)
 {
-    if(voter && voter.ballot)
+    if(voter && voter.bstatus)
     {
         var retval = "Unknown";
         switch (voter.ballot)
@@ -80,7 +80,7 @@ function setVoterStatus(voters, elections) {
 
             //voter._election_current = findElectionStatus('2018-08-07', voter);
             //voter._election_current = findElectionStatus('2018-11-06', voter);
-            voter._ballot_status = getBallotStatus(voter);
+            //voter._ballot_status = getBallotStatus(voter);
             
             //setup comparison
             var new_cutoff_date = new Date(2018,1);
