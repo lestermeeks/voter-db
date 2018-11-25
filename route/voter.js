@@ -22,11 +22,12 @@ router.use(function timeLog (req, res, next) {
 		//catch our old website names and redirect them in to votewashington with lower case url
 		res.redirect('https://www.votewashington.info' + req.originalUrl.toLowerCase());
 	}
-	else if(site_settings.fullUrl.match(new RegExp("[A-Z]"))){
+	else*/
+	 if(site_settings.fullUrl.match(new RegExp("[A-Z]"))){
 		//if we have an upper case url redirect it to lower
-		res.redirect(site_settings.fullUrl.toLowerCase());
+		res.redirect(301, site_settings.fullUrl.toLowerCase());
 	}else{
-	*/
+	
 		if (req.headers.host == 'www.votewashington.info'){
 			//our primary site
 			site_settings.name = 'Vote Washington';
@@ -59,14 +60,14 @@ router.get('/', function(req,res){
 	//if(req.headers.host.indexOf('.votewhatcom.') > -1)
 	//	res.redirect('/voter/wa/wm');
 	//else
-		res.redirect('/voter/wa');
+		res.redirect(301, '/voter/wa');
 
 });
 
 //old rounte to the non wa/wm endpoint, redirect to current county
 router.get('/id/:id', function(req,res){
 	var voter_id = req.params.id.trim();
-	res.redirect('/voter/wa/id/' + voter_id);
+	res.redirect(301, '/voter/wa/id/' + voter_id);
 });
 
 router.get('/wa', function(req,res){ 
@@ -294,7 +295,7 @@ router.get('/wa/:county_code', function(req, res, next) {
 //routes
 router.get('/wa/:county_code/id/:id', function(req,res){
 	var voter_id = req.params.id.trim();
-	res.redirect('/voter/wa/id/' + voter_id);
+	res.redirect(301, '/voter/wa/id/' + voter_id);
 });
 
 
