@@ -8,6 +8,10 @@ html
             title= title +' '+ subtitle
         else
             title= title 
+
+        if canonical
+            link(rel='canonical', href=canonical)
+        
         if og
             meta(property="og:url",           content=og.url)
             meta(property="og:type",          content="website")

@@ -184,6 +184,7 @@ router.get('/wa/id/:id', function(req,res){
 		      			pc_turnout: pc_turnout,
 		      			map_src: '/img/vote-256.png',
 						fullUrl: site_settings.fullUrl,
+						canonical: site_settings.fullUrl,
 						//breadcrumbs: [
 						//	{'title': 'WA', 'url': '/voter/wa'},
 						//	{'title': 'Whatcom', 'url':'/voter/wa/wm'},
@@ -286,6 +287,7 @@ router.get('/wa/:county_code', function(req, res, next) {
 			state_stats: app_settings.stats,
 			county: county,
 			as_of:app_settings.as_of,
+			canonical: site_settings.fullUrl,
 			hide_search: true
 		}
 	);
