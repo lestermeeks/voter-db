@@ -170,7 +170,7 @@ router.get('/wa/id/:id', function(req,res){
 
 
 					res.render('voter', { 
-						title: site_settings.name + ' Voter History: ' + voter.name,
+						title: site_settings.name + ' Voter History: ' + voter.fname + ' ' + voter.lname,
 						header: site_settings.header,
 						footer: site_settings.footer,
 						og:open_graph,

@@ -10,7 +10,7 @@ block content
             each voter in voters
                 if voter.bstatus
                     if voter.bstatus.status == "Accepted"
-                        a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/id/'+voter._id.toLowerCase()) 
+                        a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-thumbs-up.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
@@ -18,7 +18,7 @@ block content
                             //.ml-2.small Auditor Comment: #{voter.bstatus.comment}
 
                     else if voter.bstatus.status == "Received"
-                        a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/id/'+voter._id.toLowerCase()) 
+                        a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
@@ -27,7 +27,7 @@ block content
                                 .ml-2.small Auditor Comment: #{voter.bstatus.comment}
 
                     else if voter.bstatus.status == "Challenged"
-                        a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/id/'+voter._id.toLowerCase()) 
+                        a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-thumbs-down.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
@@ -35,7 +35,7 @@ block content
                             if(voter.bstatus.comment)
                                 .ml-2.small Auditor Comment: #{voter.bstatus.comment}
                 else
-                    a.list-group-item.list-group-item-action(href='/voter/id/'+voter._id.toLowerCase()) 
+                    a.list-group-item.list-group-item-action(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                         h3.fa.fa-fw.float-right
                         .ml-0 #{voter.lname}, #{voter.fname}
                         .ml-2.small #{voter.street} #{voter.city}
@@ -44,4 +44,4 @@ block content
 
             .list-group-item.text-center()
                 i.fa.fa-thumbs-up.fa-fw() 
-                | Voted in the 2018 Midterm Elections&nbsp;
+                | Voted in the 2019 February Election&nbsp;
