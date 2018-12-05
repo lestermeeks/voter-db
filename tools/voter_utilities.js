@@ -15,7 +15,7 @@ function findElectionStatus(date, voter){
         */
         //there is no more estatus so now just watch for our "current" election date
         //'2018-11-06' hard coded for now, should compar this with settings though.
-        if(date == '2018-11-06')
+        if(date == '2019-02-12')
         {
             if(voter.bstatus)
                 return true;
