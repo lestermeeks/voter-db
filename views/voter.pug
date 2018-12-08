@@ -78,11 +78,12 @@ block content
                             i.fa.fa-map.fa-fw
                             | &nbsp;Washington State:  
                             span.float-right #{state_stats.turnout}%
-                    .list-group-item
-                        h6
-                            i.fa.fa-map-marker.fa-fw()   
-                            | &nbsp;#{county.name} County:
-                            span.float-right #{county.turnout}%
+                    if county && county.turnout
+                        .list-group-item
+                            h6
+                                i.fa.fa-map-marker.fa-fw()   
+                                | &nbsp;#{county.name} County:
+                                span.float-right #{county.turnout}%
                     .list-group-item
                         h6
                             i.fa.fa-street-view.fa-fw()   
