@@ -22,6 +22,7 @@ var app_settings = {
 	stats: null,
 	db_counts: {},
 	current_last_seen: "10/31/2018",
+	current_election: "2019-02-12",
 	//as_of: "11/02/2018",
 	as_of:"11/30/2018",
 	elections: [
@@ -111,7 +112,7 @@ MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, cl
 	app_settings.wa_voter_db = client.db('wa-voter-db');
 
 	//setTimeout(myFunc, 1500, 'funky');
-	app_settings.wa_voter_db.collection('stats').find({state:'WA', election:'2018-11-06'}).toArray(function(err, stats) {
+	app_settings.wa_voter_db.collection('stats').find({state:'WA', election:app_settings.current_election}).toArray(function(err, stats) {
 		if(err || !stats || stats.length == 0)
 		{
 			console.log('No Stats?');
