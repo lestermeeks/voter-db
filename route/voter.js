@@ -117,13 +117,16 @@ router.get('/wa/id/:id', function(req,res){
 			//console.log(util.inspect(voter));
 			//var app_settings = req.app.get('app_settings');
 			var county = {};
-			app_settings.stats.counties.forEach(function(county_loop){
-		  		if(county_loop.code == voter.county){
-		  			county = county_loop;
-		  		}
-		  	});
+			if(app_settings.stats && app_settings.stats.counties){
 
 
+				app_settings.stats.counties.forEach(function(county_loop){
+			  		if(county_loop.code == voter.county){
+			  			county = county_loop;
+			  		}
+			  	});
+
+			}
 
 
 			//fill in some basic precinct and street turnout data
