@@ -73,11 +73,12 @@ block content
                         h6 (as of #{as_of})
                 
                 .list-group.list-group-flush
-                    .list-group-item
-                        h6 
-                            i.fa.fa-map.fa-fw
-                            | &nbsp;Washington State:  
-                            span.float-right #{state_stats.turnout}%
+                    if state_stats && state_stats.turnout
+                        .list-group-item
+                            h6 
+                                i.fa.fa-map.fa-fw
+                                | &nbsp;Washington State:  
+                                span.float-right #{state_stats.turnout}%
                     if county && county.turnout
                         .list-group-item
                             h6
