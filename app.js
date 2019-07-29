@@ -22,7 +22,7 @@ var app_settings = {
 	stats: null,
 	db_counts: {},
 	current_last_seen: "10/31/2018",
-	current_election: "2019-02-12",
+	current_election: "2018-11-06",
 	//as_of: "11/02/2018",
 	as_of:"11/30/2018",
 	elections: [
