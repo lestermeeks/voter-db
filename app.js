@@ -116,6 +116,7 @@ MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, cl
 		if(err || !stats || stats.length == 0)
 		{
 			console.log('No Stats?');
+			app_settings.stats = {counties:app_settings.counties};
 		}
 		else
 		{
