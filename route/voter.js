@@ -270,7 +270,7 @@ router.get('/wa/:county_code', function(req, res, next) {
 	
   	
 	//var app_settings = req.app.get('app_settings');
-	var county = {};
+	var county = { code:"XX", name:"Unknown"};
   	app_settings.stats.counties.forEach(function(county_loop){
   		if(county_loop.code == county_code){
   			county = county_loop;

@@ -111,132 +111,7 @@ MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, cl
 
 	app_settings.wa_voter_db = client.db('wa-voter-db');
 
-	//setTimeout(myFunc, 1500, 'funky');
-	app_settings.wa_voter_db.collection('stats').find({state:'WA', election:app_settings.current_election}).toArray(function(err, stats) {
-		if(err || !stats || stats.length == 0)
-		{
-			console.log('No Stats?');
-			app_settings.stats = {counties:app_settings.counties};
-		}
-		else
-		{
-			app_settings.stats = stats[0];
-		
-			if(app_settings.stats && app_settings.stats.counties)
-			{
-				app_settings.stats.v_count_format = Number(app_settings.stats.v_count).toLocaleString();
-				app_settings.stats.b_count_format = Number(app_settings.stats.b_count).toLocaleString();
-				app_settings.stats.turnout = (app_settings.stats.b_count / app_settings.stats.v_count * 100).toFixed(1);
-				app_settings.stats.turnout_dec = (app_settings.stats.b_count / app_settings.stats.v_count);
-
-				app_settings.stats.counties.forEach(function(county) {
-
-					county.turnout = (county.b_count / county.v_count * 100).toFixed(1);
-					county.turnout_dec = (county.b_count / county.v_count);
-					//console.log(county.code + ': ' + county.turnout);
-
-					if(county.precincts)
-					{
-						county.precincts.forEach(function(precinct) {
-
-							precinct.turnout = (precinct.b_count / precinct.v_count * 100).toFixed(1);
-							precinct.turnout_dec = (precinct.b_count / precinct.v_count);
-							//console.log(precinct.code + ': ' + precinct.turnout);
-
-						});
-
-
-						for(var i = 0; i < county.precincts.length; i++)
-						{
-							var precinct = county.precincts[i];
-
-							precinct.voter_rank = 1;
-							precinct.turnout_rank = 1;
-
-							for(var j = 0; j < county.precincts.length; j++)
-							{
-								if(county.precincts[j].v_count > precinct.v_count)
-									precinct.voter_rank++;
-								if(county.precincts[j].turnout_dec > precinct.turnout_dec)
-									precinct.turnout_rank++;
-							}
-
-							//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.v_count);
-							//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
-						}
-
-						county.precincts.sort(function(a,b){
-							if(a.turnout_rank < b.turnout_rank)
-								return -1;
-							else
-								return 1;
-						});
-					}
-
-
-
-				});
-
-
-				for(var i = 0; i < app_settings.stats.counties.length; i++)
-				{
-					var county = app_settings.stats.counties[i];
-
-					county.voter_rank = 1;
-					county.turnout_rank = 1;
-
-					for(var j = 0; j < app_settings.stats.counties.length; j++)
-					{
-						if(app_settings.stats.counties[j].v_count > county.v_count)
-							county.voter_rank++;
-						if(app_settings.stats.counties[j].turnout_dec > county.turnout_dec)
-							county.turnout_rank++;
-					}
-
-					//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.v_count);
-					//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
-				}
-
-				app_settings.stats.counties.sort(function(a,b){
-					if(a.turnout_rank < b.turnout_rank)
-						return -1;
-					else
-						return 1;
-				});
-
-				//updateStats(app_settings);
-			}
-		}
-		
-	});
-
-	//process our counties list... this will be a query eventually.
-	app_settings.counties.forEach(function(county) {
-
-		county.turnout = (county.ballot_count / county.voter_count * 100).toFixed(0);
-		county.turnout_dec = (county.ballot_count / county.voter_count);
-		//console.log(county.code + ': ' + county.turnout);
-
-	});
-
-	for(var i = 0; i < app_settings.counties.length; i++)
-	{
-		var county = app_settings.counties[i];
-
-		county.voter_rank = 1;
-		county.turnout_rank = 1;
-
-		for(var j = 0; j < app_settings.counties.length; j++)
-		{
-			if(app_settings.counties[j].voter_count > county.voter_count)
-				county.voter_rank++;
-			if(app_settings.counties[j].turnout_dec > county.turnout_dec)
-				county.turnout_rank++;
-		}
-
-		//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.voter_count);
-		//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
-	}
+	setInterval(updateStats, 2500, app_settings);
 
 
 	console.log('MongoClient connected');
@@ -287,112 +162,120 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-  /* ... start the server
+
+  // ... start the server
 var processStats = false;
 var updateTick = 360; //15 mins
-var workingStats = null;
+//var workingStats = null;
 function updateStats(arg) {
 	updateTick++;
 
-	if(!currentUpdateRequest)
+
+	if(updateTick>360)
 	{
-		if(updateRequestList.length == 0 && updateTick > 360 && arg.stats)
-		{
-			console.log("Starting Update");
-
-			workingStats = JSON.parse(JSON.stringify(arg.stats));
-	  		updateRequestList.push({ "target": workingStats, "v_filter": {status:'A'}, "b_filter": {status:'A', ballot:{$ne:null}}});
-
-	  		workingStats.counties.forEach(function(county){
-	  			updateRequestList.push({ "target": county, "v_filter": {status:'A', county:county.code}, "b_filter": {status:'A', county:county.code, ballot:{$ne:null}}});
-
-	  			//county.precincts.forEach(function(precint){
-	  			//	updateRequestList.push({ "target": precint, "v_filter": {status:'A', county:county.code, pc:precint.code}, "b_filter": {status:'A', county:county.code, pc:precint.code, ballot:{$ne:null}}});
-	  			//});
-	  		});
-	  		updateTick = 0;
-	  	}
-
-	  //console.log(`arg was => ${arg}`);
-	  	if(updateRequestList.length == 0 && processStats)
-	  	{
-
-
-
-	  		console.log("Processing Stats");
-	  		
-		
-			for(var i = 0; i < workingStats.counties.length; i++)
+		//setTimeout(myFunc, 1500, 'funky');
+		app_settings.wa_voter_db.collection('stats').find({state:'WA', election:app_settings.current_election}).toArray(function(err, stats) {
+			if(err || !stats || stats.length == 0)
 			{
-				var county = workingStats.counties[i];
-
-				county.voter_rank = 1;
-				county.turnout_rank = 1;
-
-				for(var j = 0; j < workingStats.counties.length; j++)
-				{
-					if(workingStats.counties[j].v_count > county.v_count)
-						county.voter_rank++;
-					if(workingStats.counties[j].turnout_dec > county.turnout_dec)
-						county.turnout_rank++;
-				}
-
-				//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.v_count);
-				//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
+				console.log('No Stats?');
+				app_settings.stats = {counties:[]};
 			}
-
-			workingStats.counties.sort(function(a,b){
-				if(a.turnout_rank < b.turnout_rank)
-					return -1;
-				else
-					return 1;
-			});
-
-			arg.stats = workingStats;
-			workingStats = null;
-			processStats = false;
-
-	  	}
-		
-	  	if(updateRequestList.length)
-	  	{
-	  		console.log(`Request List Length: ${updateRequestList.length}`);
-			currentUpdateRequest = updateRequestList[0];
-			updateRequestList.shift();
-
-		  	app_settings.wa_voter_db.collection('voter').find(currentUpdateRequest.v_filter).count(function(err, v_count) {
-		  	app_settings.wa_voter_db.collection('voter').find(currentUpdateRequest.b_filter).count(function(err, b_count) {
-				
-				currentUpdateRequest.target.v_count = v_count;
-				currentUpdateRequest.target.v_count_format = Number(v_count).toLocaleString();
-				currentUpdateRequest.target.b_count = b_count;
-				currentUpdateRequest.target.b_count_format = Number(b_count).toLocaleString();
-				currentUpdateRequest.target.turnout_dec = (b_count / v_count);
-				currentUpdateRequest.target.turnout = (currentUpdateRequest.target.turnout_dec* 100).toFixed(1);
-				
-				//arg.db_counts.docs = doc_count;
-				//console.log(`arg was => ${doc_count}`);
-				console.log(`${currentUpdateRequest.target.code}: ${b_count}/${v_count}=${currentUpdateRequest.target.turnout}`)
-				//db.collection.find({"docs": { $not: {$elemMatch: {foo: 1 } } } })
-				currentUpdateRequest = null;
-
-				if(updateRequestList.length == 0)
+			else
+			{
+				app_settings.stats = stats[0];
+			
+				if(app_settings.stats && app_settings.stats.counties)
 				{
-					//sort the counties
-					processStats = true;
-				}
-			});
-			});
-		}
+					app_settings.stats.v_count_format = Number(app_settings.stats.v_count).toLocaleString();
+					app_settings.stats.b_count_format = Number(app_settings.stats.b_count).toLocaleString();
+					app_settings.stats.turnout = (app_settings.stats.b_count / app_settings.stats.v_count * 100).toFixed(1);
+					app_settings.stats.turnout_dec = (app_settings.stats.b_count / app_settings.stats.v_count);
 
-	}
-	else
-	{
-		//console.log("Update Busy");
+					app_settings.stats.counties.forEach(function(county) {
+
+						county.turnout = (county.b_count / county.v_count * 100).toFixed(1);
+						county.turnout_dec = (county.b_count / county.v_count);
+						//console.log(county.code + ': ' + county.turnout);
+
+						if(county.precincts)
+						{
+							county.precincts.forEach(function(precinct) {
+
+								precinct.turnout = (precinct.b_count / precinct.v_count * 100).toFixed(1);
+								precinct.turnout_dec = (precinct.b_count / precinct.v_count);
+								//console.log(precinct.code + ': ' + precinct.turnout);
+
+							});
+
+
+							for(var i = 0; i < county.precincts.length; i++)
+							{
+								var precinct = county.precincts[i];
+
+								precinct.voter_rank = 1;
+								precinct.turnout_rank = 1;
+
+								for(var j = 0; j < county.precincts.length; j++)
+								{
+									if(county.precincts[j].v_count > precinct.v_count)
+										precinct.voter_rank++;
+									if(county.precincts[j].turnout_dec > precinct.turnout_dec)
+										precinct.turnout_rank++;
+								}
+
+								//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.v_count);
+								//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
+							}
+
+							county.precincts.sort(function(a,b){
+								if(a.turnout_rank < b.turnout_rank)
+									return -1;
+								else
+									return 1;
+							});
+						}
+
+
+
+					});
+
+
+					for(var i = 0; i < app_settings.stats.counties.length; i++)
+					{
+						var county = app_settings.stats.counties[i];
+
+						county.voter_rank = 1;
+						county.turnout_rank = 1;
+
+						for(var j = 0; j < app_settings.stats.counties.length; j++)
+						{
+							if(app_settings.stats.counties[j].v_count > county.v_count)
+								county.voter_rank++;
+							if(app_settings.stats.counties[j].turnout_dec > county.turnout_dec)
+								county.turnout_rank++;
+						}
+
+						//console.log(county.name + ': Voter Rank: ' + county.voter_rank + ' ' + county.v_count);
+						//console.log(county.name + ': Turnout Rank: ' + county.turnout_rank + ' ' + county.turnout);
+					}
+
+					app_settings.stats.counties.sort(function(a,b){
+						if(a.turnout_rank < b.turnout_rank)
+							return -1;
+						else
+							return 1;
+					});
+
+					//updateStats(app_settings);
+				}
+			}
+			
+		});
+		updateTick = 0;
 	}
 }
 
 
-setInterval(updateStats, 2500, app_settings);
-*/
+//setInterval(updateStats, 2500, app_settings);
+
 module.exports = app;
