@@ -63,7 +63,8 @@ function getBallotStatus(voter)
 function setVoterStatus(voters, elections) {
     if(voters){
 
-
+        if(!voters.isArray)
+            voters = [voters];
 
         voters.forEach(function(voter, index, voters)
         {
@@ -105,8 +106,41 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
+async function findUser(db, voterId)
+{
+    var voter = await db.collection('voter').find({_id: voterId});//.then(user=>return user).catch(err=>return err);
+    return voter;
+}
 
 module.exports = {
     setVoterStatus: setVoterStatus,
-    handleError: handleError
+    handleError: handleError,
+    FindVoter: (db, voterId) => {
+        return new Promise((resolve, reject) => {
+
+            db
+             .collection('voter')
+             .find({_id: voterId})
+             .limit(1)
+             .toArray(function(err, data) {
+                 err 
+                    ? reject(err) 
+                    : resolve(data[0]);
+               });
+        });
+    },
+    FindPrecinctVoters: (db, county, precinct)=>{
+        return new Promise((resolve, reject) => {
+
+            db
+             .collection('voter')
+             .find({status: 'ACTIVE', county:county, pc:precinct})
+             .toArray(function(err, data) {
+                 err 
+                    ? reject(err) 
+                    : resolve(data);
+               });
+        });
+    }
+
 };

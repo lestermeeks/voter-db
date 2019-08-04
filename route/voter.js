@@ -94,12 +94,114 @@ router.get('/wa', function(req,res){
 });
 
 //old rounte to the non wa/wm endpoint, redirect to current county
-router.get('/wa/id/:id', function(req,res){
+router.get('/wa/id/:id', async function(req,res){
 	var voter_id = req.params.id.trim().toUpperCase();
-	//var county_code = req.params.county_code.toUpperCase();
+	//var county_code = req.params.county_code.toUpperCase
+	var db = app_settings.wa_voter_db;
 	
+	voter_utilities.FindVoter(db, voter_id)
+	.then(function(voter){
+		if(!voter){
+			//none found
+			res.render('voter_not_found', { title: site_settings.name});
+		} else {
+
+						//set status for this voter
+			voter_utilities.setVoterStatus(voter, app_settings.elections);
+
+			//render the first one... id is unique don't wast time checking for multiples
+			//var voter = voters[0];
+			
+			//console.log(util.inspect(voter));
+			//var app_settings = req.app.get('app_settings');
+			var county = {};
+			if(app_settings.stats && app_settings.stats.counties){
 
 
+				app_settings.stats.counties.forEach(function(county_loop){
+			  		if(county_loop.code == voter.county){
+			  			county = county_loop;
+			  		}
+			  	});
+
+			}
+
+
+			//fill in some basic precinct and street turnout data
+			app_settings.wa_voter_db.collection('voter').find({status: 'ACTIVE', county:voter.county, pc:voter.pc}).toArray(function(err, precinct_voters) {
+				var pc_current = 0, street_current = 0;
+
+				voter_utilities.setVoterStatus(precinct_voters);
+				
+				neighbors = [];
+				precinct_voters.forEach(function(precinct_voter) {
+
+					if(precinct_voter.bstatus)
+					{
+						pc_current++;
+					}
+
+					if (precinct_voter.street == voter.street)
+					{
+						neighbors.push(precinct_voter);
+						if(precinct_voter.bstatus)
+						{
+							street_current++;
+						}
+					}
+				});
+			
+				var st_percentage;
+				if(neighbors.length > 0)
+					st_percentage = Math.round(street_current / neighbors.length * 100);
+
+				var pc_turnout;
+				if(precinct_voters.length > 0)
+					pc_turnout = Math.round(pc_current / precinct_voters.length * 100);
+		      		
+				open_graph.title = site_settings.name + ' Voter History: ' + voter.name;
+				open_graph.desc = 'Washington State Voter History for ' + voter.name;
+				if (voter.bstatus){
+                    //img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
+                    open_graph.img = 'https://' + req.headers.host + '/img/voted-2018-midterm-small.jpg';
+				}
+                else{
+                    open_graph.img = 'https://' + req.headers.host + '/img/vote-2018-midterm-small.jpg';
+                }
+
+
+					res.render('voter', { 
+						title: site_settings.name + ' Voter History: ' + voter.fname + ' ' + voter.lname,
+						header: site_settings.header,
+						footer: site_settings.footer,
+						og:open_graph,
+						voter: voter,
+						counties: app_settings.counties,
+						county: county,
+						state_stats: app_settings.stats,
+						as_of:app_settings.as_of,
+						//near_voters: near_voters,
+						street_turnout: st_percentage,
+		      			pc_turnout: pc_turnout,
+		      			map_src: '/img/vote-256.png',
+						fullUrl: site_settings.fullUrl,
+						canonical: site_settings.fullUrl,
+						//breadcrumbs: [
+						//	{'title': 'WA', 'url': '/voter/wa'},
+						//	{'title': 'Whatcom', 'url':'/voter/wa/wm'},
+						//	{'title': 'Voter Name', 'url':'/voter/wa/wm/id/'+voter._id, 'active':true}
+						//],
+						hide_search: true
+					});
+				//}
+
+			});
+		}
+	})
+	.catch(function(err){
+		voter_utilities.handleError(res, err.message, err.message);
+	});
+	/*
 	app_settings.wa_voter_db.collection('voter').find({_id:voter_id}).toArray(function(err, voters) {
 		if(err){
 			voter_utilities.handleError(res, err.message, err.message);
@@ -199,7 +301,7 @@ router.get('/wa/id/:id', function(req,res){
 
 			});
 		}
-	});
+	});*/
 });
 
 router.get('/wa/search', function(req,res){
@@ -209,7 +311,7 @@ router.get('/wa/search', function(req,res){
 	//var app_settings = req.app.get('app_settings');
 	
     //build query, basic case insensitive substring regex
-	var query_obj = {status:'A'};
+	var query_obj = {status:'ACTIVE'};
 	if (lname) {
 		query_obj.lname= new RegExp('^'+lname.trim());
 	}
@@ -339,7 +441,7 @@ router.get('/wa/:county_code/precinct/:precinct', function(req,res){
   		}
   	});
 
-	app_settings.wa_voter_db.collection('voter').find({status:'A', county:county_code, pc:voter_precinct}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, pc:voter_precinct}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		renderVoterResponse(site_settings.name + ': Precinct ' + voter_precinct, req, res, err, voters, county);
 	});
 });
@@ -358,7 +460,7 @@ router.get('/wa/:county_code/street/:zip/:street', function(req,res){
   		}
   	});
 
-	app_settings.wa_voter_db.collection('voter').find({status:'A', county:county_code, street:voter_street, zip:voter_zip}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, street:voter_street, zip:voter_zip}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		renderVoterResponse(site_settings.name + ': Street Name ' + voter_street, req, res, err, voters, county);
 	});
 });
@@ -379,7 +481,7 @@ router.get('/wa/:county_code/search', function(req,res){
   	});
 	
     //build query, basic case insensitive substring regex
-	var query_obj = {status:'A', county:county_code};
+	var query_obj = {status:'ACTIVE', county:county_code};
 	if (lname) {
 		query_obj.lname= new RegExp('^'+lname.trim());
 	}
@@ -415,7 +517,7 @@ router.get('/wa/:county_code/name/:last', function(req,res){
   		}
   	});
 	//grab the dataset
-	app_settings.wa_voter_db.collection('voter').find({status:'A', lname:voter_last_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', lname:voter_last_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		renderVoterResponse(site_settings.name + ': Voter Last Name ' + voter_last_name, req, res, err, voters, county);
 	});
 });
@@ -435,7 +537,7 @@ router.get('/wa/:county_code/name/:last/:first', function(req,res){
   		}
   	});
 
-	app_settings.wa_voter_db.collection('voter').find({status:'A', lname:voter_last_name, fname:voter_first_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', lname:voter_last_name, fname:voter_first_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		renderVoterResponse(site_settings.name + ': Voter Name ' + voter_last_name + ', ' + voter_first_name, req, res, err, voters, county);
 	});
 });

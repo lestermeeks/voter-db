@@ -4,10 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var util = require('util');
-const MongoClient = require('mongodb').MongoClient;
 
-var apiRouter = require('./route/api');
-var frameRouter = require('./route/frame');
+const MongoClient = require('mongodb').MongoClient;
+const voter_utilities = require('./tools/voter_utilities');
+
+var fs = require('fs');
+var path = require('path');
+//const readline = require('readline');
+//const pEvent = require('p-event');
+
+
+//var apiRouter = require('./route/api');
+//var frameRouter = require('./route/frame');
 var voterRouter = require('./route/voter');
 
 //var voter_utilities = require('./tools/voter_utilities');
@@ -101,67 +109,91 @@ if(!process.env.MONGODB_URI)
 	console.log('Missing ENV var MONGODB_URI');
 	process.exit(1);
 }
-
-MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
-
-	if (err) {
-    	console.log(err);
-    	process.exit(1);
-  	}
-
-	app_settings.wa_voter_db = client.db('wa-voter-db');
-
-	setInterval(updateStats, 2500, app_settings);
-
-
-	console.log('MongoClient connected');
-});
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-app.set('app_settings', app_settings);
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-//app.use('/stylesheets/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/'));
-app.use(express.static(path.join(__dirname, 'public')));
 /*
-app.get('*',function(req,res,next){
-	//console.log(req.app.get('env'));
-	if(req.app.get('env') !== 'development' && req.headers['x-forwarded-proto']!='https')
-		res.redirect('https://'+req.headers.host+req.url);
-	else
-		next();
-});
+MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+	.then( function (client) {
+		app_settings.wa_voter_db = client.db('wa-voter-db');
+
+	//setInterval(updateStats, 2500, app_settings);
+
+
+		console.log('MongoClient connected');
+
+
+	}).catch(function(error){
+
+		console.log('MongoClient Error:');
+	    console.log(err);
+	    process.exit(1);
+	  	
+	});
 */
-app.get('/', function(req,res){ 
-	res.redirect('/voter');
-});
+
+MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+	.then(function(client){
+		app_settings.wa_voter_db = client.db('wa-voter-db');
+		console.log('MongoClient connected');
+	})
+	.then(function(){
+		console.log('Then AGAIN');
+
+		// view engine setup
+		app.set('views', path.join(__dirname, 'views'));
+		app.set('view engine', 'pug');
+		app.set('app_settings', app_settings);
+
+		app.use(logger('dev'));
+		app.use(express.json());
+		app.use(express.urlencoded({ extended: false }));
+		app.use(cookieParser());
+		//app.use('/stylesheets/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/'));
+		app.use(express.static(path.join(__dirname, 'public')));
+		/*
+		app.get('*',function(req,res,next){
+			//console.log(req.app.get('env'));
+			if(req.app.get('env') !== 'development' && req.headers['x-forwarded-proto']!='https')
+				res.redirect('https://'+req.headers.host+req.url);
+			else
+				next();
+		});
+		*/
+		app.get('/', function(req,res){ 
+			res.redirect('/voter');
+		});
 
 
-//app.use('/api/v1', apiRouter);
-//app.use('/frame', frameRouter);
-app.use('/voter', voterRouter);
+		//app.use('/api/v1', apiRouter);
+		//app.use('/frame', frameRouter);
+		app.use('/voter', voterRouter);
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+		// catch 404 and forward to error handler
+		app.use(function(req, res, next) {
+		  next(createError(404));
+		});
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+		// error handler
+		app.use(function(err, req, res, next) {
+		  // set locals, only providing error in development
+		  res.locals.message = err.message;
+		  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+		  // render the error page
+		  res.status(err.status || 500);
+		  res.render('error');
+		});
+
+		setInterval(updateStats, 2500, app_settings);
+
+	})
+	.catch(function(error){
+		console.log('MongoClient Error:');
+		console.log(error);
+		process.exit(1);
+	});
+
+
+
 
   // ... start the server
 var processStats = false;
@@ -171,9 +203,10 @@ function updateStats(arg) {
 	updateTick++;
 
 
+
 	if(updateTick>360)
 	{
-		//setTimeout(myFunc, 1500, 'funky');
+		console.log('Updating Stats.');
 		app_settings.wa_voter_db.collection('stats').find({state:'WA', election:app_settings.current_election}).toArray(function(err, stats) {
 			if(err || !stats || stats.length == 0)
 			{
@@ -272,10 +305,91 @@ function updateStats(arg) {
 			
 		});
 		updateTick = 0;
+
+
+
 	}
 }
 
+async function parseHistory() {
 
-//setInterval(updateStats, 2500, app_settings);
+
+		//var x = path.join('Users', 'Refsnes', 'demo_path.js');
+var data_path = path.join(process.cwd(), 'data');
+var history_path = path.join(data_path, 'history');
+
+
+// delete everything in histsory
+
+var filesToDelete = fs.readdirSync(history_path);
+
+filesToDelete.forEach( function( filetoDelete) {
+
+        console.log('Deleting: ', filetoDelete);
+        fs.unlinkSync(path.join(history_path, filetoDelete));
+    
+});
+
+
+var history = [];
+//check for our voter db file
+fs.readdir(data_path, async function(err, items) {
+    //console.log(items);
+ 
+    for (var i=0; i<items.length; i++) {
+        console.log(items[i]);
+
+        if(items[i].indexOf('History') > -1)
+        {
+
+			try {
+			    const lineReader = readline.createInterface({
+			      input: fs.createReadStream(path.join(data_path, items[i]))
+			    });
+
+			    const asyncIterator = pEvent.iterator(lineReader, 'line', {
+			      resolutionEvents: ['close']
+			    });
+
+			    //bool busyWithHistory = false;
+			    for await (const line of asyncIterator) {
+			      console.log('Line from file:', line);
+
+				    var tokens = line.split('\t');
+				    //for(var idx = 0 ; idx < tokens.length; idx++)
+				    //{
+				    //	console.log(tokens[idx]);
+				    //}
+
+				    //while(!busyWithHistory);
+
+				    if(tokens.length > 2)
+				    {
+				    	//fs.appendFileSync(path.join(data_path,"history",tokens[1]), tokens[2]);
+
+				    	app_settings.wa_voter_db.collection('history').find({_id:voter_id}).toArray(function(err, voters) {
+
+				    	});
+
+				    	if(history[tokens[1]] === undefined)
+				    	{
+				    		history[tokens[1]] = [];
+				    	}
+						history[tokens[1]].push(tokens[2]);
+				    }
+			    }
+			} catch(e) {
+			    console.log(e);
+			} finally {
+			  console.log('Finished');
+			}
+
+        }
+    }
+});
+}
+
+
+
 
 module.exports = app;

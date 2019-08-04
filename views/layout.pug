@@ -3,7 +3,7 @@ html
     head
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name="viewport", content='width=device-width, initial-scale=1, shrink-to-fit=no')
         if( subtitle )
             title= title +' '+ subtitle
         else
@@ -26,7 +26,6 @@ html
         link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.3.1/css/all.css", integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU", crossorigin="anonymous")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css")
-        //link(rel="stylesheet", href='/stylesheets/fontawesome/css/all.min.css')
 
      
     body.container-fluid.bg-light
@@ -53,14 +52,6 @@ html
                     .input-group-append
                         button.btn.btn-primary(type='submit') Search
 
-        //.alert.alert-info(role="alert")
-            p
-                | 11/8/2018 Election Update - Washington State has stopped releasing ballot updates via their portal (as they always do about this time).  
-                | So that means that we have our last best guess as to your
-                | voter and ballot status processed and live here on Vote Washington.  Going forward into the coming weeks, if you have any questions about
-                | your ballot status, we recommend that you confirm your ballot status with your county
-                | auditor or on the official Washington State portal "MyVote".  
-            p - Thank You L & J
     
         block content
 
@@ -75,6 +66,7 @@ html
                 .small.font-italic.text-right
                     | #{footer}
 
-        script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js", integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN", crossorigin="anonymous")
-        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js", integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q", crossorigin="anonymous")
-        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js", integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl", crossorigin="anonymous")
+
+        script ( src="https://code.jquery.com/jquery-3.3.1.slim.min.js", integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo", crossorigin="anonymous")
+        script ( src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js", integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49", crossorigin="anonymous")
+        script ( src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js", integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy", crossorigin="anonymous")
