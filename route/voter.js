@@ -103,7 +103,8 @@ router.get('/wa/id/:id', async function(req,res){
 	.then(function(voter){
 		if(!voter){
 			//none found
-			res.render('voter_not_found', { title: site_settings.name});
+			//res.render('voter_not_found', { title: site_settings.name});
+			res.status(404).send("No Voter Found");
 		} else {
 
 						//set status for this voter
@@ -554,14 +555,15 @@ function renderVoterResponse (title, req, res, err, voters, county)
     if (err) {
       voter_utilities.handleError(res, err.message, "No Voter Found");
     } else if( !voters || voters.length == 0) {
-        res.render('voter_not_found', { 
-          title: title,
-          header: site_settings.header,
-          footer: site_settings.footer,
-          county: county,
-          counties: req.app.get('app_settings').counties,
-          hide_search: true
-        });
+        //res.render('voter_not_found', { 
+        //  title: title,
+        //  header: site_settings.header,
+        //  footer: site_settings.footer,
+        //  county: county,
+        //  counties: req.app.get('app_settings').counties,
+         // hide_search: true
+        //});
+        res.status(404).send("No Voter Found");
     } else if (voters.length == 1) {
 
        res.redirect('/voter/wa/id/'+voters[0]._id.toLowerCase());
