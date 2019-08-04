@@ -8,8 +8,8 @@ var util = require('util');
 const MongoClient = require('mongodb').MongoClient;
 const voter_utilities = require('./tools/voter_utilities');
 
-var fs = require('fs');
-var path = require('path');
+//var fs = require('fs');
+//var path = require('path');
 //const readline = require('readline');
 //const pEvent = require('p-event');
 
@@ -310,7 +310,7 @@ function updateStats(arg) {
 
 	}
 }
-
+/*
 async function parseHistory() {
 
 
@@ -388,8 +388,7 @@ fs.readdir(data_path, async function(err, items) {
     }
 });
 }
-
-
+*/
 
 
 module.exports = app;
