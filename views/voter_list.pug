@@ -26,7 +26,7 @@ block content
                             if(voter.bstatus.comment)
                                 .ml-2.small Auditor Comment: #{voter.bstatus.comment}
 
-                    else if voter.bstatus.status == "Challenged"
+                    else if voter.bstatus.status == "Rejected"
                         a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-thumbs-down.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
@@ -44,4 +44,4 @@ block content
 
             .list-group-item.text-center()
                 i.fa.fa-thumbs-up.fa-fw() 
-                | Voted in the 2019 February Election&nbsp;
+                | Voted in the 2019 General Election&nbsp;
