@@ -15,16 +15,16 @@ block content
                 .card-body.bg-primary.text-light.text-center
                     h4 #{voter.fname} #{voter.lname}
                     
-                    //if voter.bstatus
-                    //    h5 Thank You For Voting!
-                    //    h6 Ballot: #{voter.bstatus.status} on #{voter.bstatus.sdate}
-                    //    if(voter.bstatus.comment  && voter.bstatus.status != 'Accepted')
-                    //        h6 Auditor Comment: #{voter.bstatus.comment}
+                    if voter.bstatus
+                        h5 Thank You For Voting!
+                        h6 Ballot: #{voter.bstatus.status} on #{voter.bstatus.sdate}
+                        if(voter.bstatus.comment  && voter.bstatus.status != 'Accepted')
+                            h6 Auditor Comment: #{voter.bstatus.comment}
 
-                    //else
-                    //    h5 We are still waiting for your ballot!
+                    else
+                        h5 We are still waiting for your ballot!
 
-                    h5 Primary Election Ballots out NOW.
+                    //h5 Primary Election Ballots out NOW.
 
             .card.mb-2
                 .list-group.list-group-flush
