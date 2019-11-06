@@ -30,9 +30,9 @@ var app_settings = {
 	stats: null,
 	db_counts: {},
 	current_last_seen: "10/31/2018",
-	current_election: "2019-08-06",
+	current_election: "2019-11-05",
 	//as_of: "11/02/2018",
-	as_of:"11/30/2018",
+	as_of:"11/04/2019",
 	elections: [
 		{date: '2019-08-06', desc:'2019: State Primary Election'},
 		{date: '2018-11-06', desc:'2018: Midterm Election'},
