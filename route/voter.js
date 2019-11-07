@@ -160,16 +160,17 @@ router.get('/wa/id/:id', async function(req,res){
 				if(precinct_voters.length > 0)
 					pc_turnout = Math.round(pc_current / precinct_voters.length * 100);
 		      		
-				open_graph.title = site_settings.name + ' Voter History: ' + voter.name;
-				open_graph.desc = 'Washington State Voter History for ' + voter.name;
-				if (voter.bstatus){
+				open_graph.title = site_settings.name + ' Voter History: ' + voter.fname + ' ' + voter.lname
+				open_graph.desc = 'Washington Voter History: ' + voter.fname + ' ' + voter.lname
+				
+				/*if (voter.bstatus){
                     //img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
                     open_graph.img = 'https://' + req.headers.host + '/img/voted-2018-midterm-small.jpg';
 				}
                 else{
                     open_graph.img = 'https://' + req.headers.host + '/img/vote-2018-midterm-small.jpg';
                 }
-
+				*/
 
 					res.render('voter', { 
 						title: site_settings.name + ' Voter History: ' + voter.fname + ' ' + voter.lname,
