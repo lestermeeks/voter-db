@@ -32,7 +32,7 @@ var app_settings = {
 	current_last_seen: "10/31/2018",
 	current_election: "2019-11-05",
 	//as_of: "11/02/2018",
-	as_of:"11/06/2019",
+	as_of:"11/08/2019",
 	elections: [
 		{date: '2019-11-05', desc:'2019: General Election'},
 		{date: '2019-08-06', desc:'2019: State Primary Election'},
