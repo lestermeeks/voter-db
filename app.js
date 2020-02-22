@@ -29,11 +29,12 @@ var app_settings = {
 	wa_voter_db: null,
 	stats: null,
 	db_counts: {},
-	current_last_seen: "10/31/2018",
-	current_election: "2019-11-05",
+	//current_last_seen: "10/31/2018",
+	current_election: "2020-02-10",
 	//as_of: "11/02/2018",
 	as_of:"11/08/2019",
 	elections: [
+		{date: '2020-02-10', desc:'2020: Presidental Primary'}
 		{date: '2019-11-05', desc:'2019: General Election'},
 		{date: '2019-08-06', desc:'2019: State Primary Election'},
 		{date: '2018-11-06', desc:'2018: Midterm Election'},
