@@ -20,8 +20,12 @@ block content
                     span County Turnout Percentage:
                     span.float-right #{county.turnout}% (Rank #{county.turnout_rank})
                 //.list-group-item 
-                    span.align-middle State Wide Turnout Percentage:
-                    span.float-right 41%
+                    //span.align-middle State Wide Turnout Percentage:
+                    //span.float-right %
+                a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/' +county.code.toLowerCase() + '/ballot/rejected')
+                    span.text-center County Rejected Ballot List
+                    h4.fa.fa-bars.fa-fw.float-right
+                    
             .card.mb-2
                 .card-header
                     .card-title

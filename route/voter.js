@@ -366,6 +366,17 @@ router.get('/wa/ld/:ld', function(req,res){
 	});
 });
 
+router.get('/wa/:county_code/ballot/:ballot_status', function(req,res){
+	//var voter_ld = req.params.ld.trim();
+	var county_code = req.params.county_code.trim().toUpperCase();
+	var ballot_status = req.params.ballot_status.trim().toUpperCase();
+
+	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
+	wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+		
+		renderVoterResponse(site_settings.name + ': County Ballot Status ' + county_code, req, res, err, voters);
+	});
+});
 
 /* GET home page. */
 router.get('/wa/:county_code', function(req, res, next) {
