@@ -345,27 +345,27 @@ router.get('/wa/cd/:cd', function(req,res){
 	});
 });
 */
-/*
+
 router.get('/wa/ld/:ld/ballot/:ballot_status', function(req,res){
 	var voter_ld = req.params.ld.trim();
 	var ballot_status = req.params.ballot_status.trim().toUpperCase();
 
 	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
-	wa_voter_db.collection('voter').find({status:'A', ld:voter_ld, ballot:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	wa_voter_db.collection('voter').find({status:'ACTIVE', ld:voter_ld, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		
 		renderVoterResponse(site_settings.name + ': Legislative District Ballot Status ' + voter_ld, req, res, err, voters);
 	});
 });
-*/
-/*
+
+
 router.get('/wa/ld/:ld', function(req,res){
 	var voter_ld = req.params.ld.trim();
 	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
-	wa_voter_db.collection('voter').find({status:'A', ld:voter_ld}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+	wa_voter_db.collection('voter').find({status:'ACTIVE', ld:voter_ld}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		renderVoterResponse(site_settings.name + ': Legislative District ' + voter_ld, req, res, err, voters);
 	});
 });
-*/
+
 
 /* GET home page. */
 router.get('/wa/:county_code', function(req, res, next) {

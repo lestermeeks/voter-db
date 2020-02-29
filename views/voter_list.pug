@@ -8,32 +8,32 @@ block content
 
         .list-group.list-group-flush
             each voter in voters
-                if voter.bstatus
-                    if voter.bstatus.status == "Accepted"
+                if voter.ballot
+                    if voter.ballot.status == "Accepted"
                         a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-thumbs-up.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
-                            //.ml-2.small Auditor Comment: #{voter.bstatus.comment}
+                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+                            //.ml-2.small Auditor Comment: #{voter.ballot.comment}
 
-                    else if voter.bstatus.status == "Received"
+                    else if voter.ballot.status == "Received"
                         a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
-                            if(voter.bstatus.comment)
-                                .ml-2.small Auditor Comment: #{voter.bstatus.comment}
+                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+                            if(voter.ballot.comment)
+                                .ml-2.small Auditor Comment: #{voter.ballot.comment}
 
-                    else if voter.bstatus.status == "Rejected"
+                    else if voter.ballot.status == "Rejected"
                         a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                             h3.fa.fa-thumbs-down.fa-fw.float-right
                             .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
                             .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.bstatus.status} on #{voter.bstatus.sdate}
-                            if(voter.bstatus.comment)
-                                .ml-2.small Auditor Comment: #{voter.bstatus.comment}
+                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+                            if(voter.ballot.comment)
+                                .ml-2.small Auditor Comment: #{voter.ballot.comment}
                 else
                     a.list-group-item.list-group-item-action(href='/voter/wa/id/'+voter._id.toLowerCase()) 
                         h3.fa.fa-fw.float-right

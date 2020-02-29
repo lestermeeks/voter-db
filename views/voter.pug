@@ -6,7 +6,7 @@ block content
 
         
             .card.mb-2
-                //if voter.bstatus
+                //if voter.ballot
                 //    img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
                 //else
                 //    img.card-img-top(src="/img/vote-2018-midterm-small.jpg" alt="Vote Image")
@@ -15,12 +15,12 @@ block content
                 .card-body.bg-primary.text-light.text-center
                     h4 #{voter.fname} #{voter.lname}
                     
-                    if voter.bstatus
+                    if voter.ballot
                         h5 Thank You For Voting!
-                        h6 Ballot: #{voter.bstatus.status} on #{voter.bstatus.sdate}
-                        h6 Party: #{voter.bstatus.party}
-                        if(voter.bstatus.comment  && voter.bstatus.status != 'Accepted')
-                            h6 Auditor Comment: #{voter.bstatus.comment}
+                        h6 Ballot: #{voter.ballot.status} on #{voter.ballot.sdate}
+                        h6 Party: #{voter.ballot.party}
+                        if(voter.ballot.comment  && voter.ballot.status != 'Accepted')
+                            h6 Auditor Comment: #{voter.ballot.comment}
 
                     else
                         h5 We are still waiting for your ballot!
