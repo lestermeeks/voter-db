@@ -30,11 +30,11 @@ var app_settings = {
 	stats: null,
 	db_counts: {},
 	//current_last_seen: "10/31/2018",
-	current_election: "2020-02-10",
+	//current_election: "2020-03-10",
 	//as_of: "11/02/2018",
 	as_of:"11/08/2019",
 	elections: [
-		{date: '2020-02-10', desc:'2020: Presidental Primary'},
+		{date: '2020-03-10', desc:'2020: Presidental Primary'},
 		{date: '2019-11-05', desc:'2019: General Election'},
 		{date: '2019-08-06', desc:'2019: State Primary Election'},
 		{date: '2018-11-06', desc:'2018: Midterm Election'},
@@ -210,7 +210,7 @@ function updateStats(arg) {
 	if(updateTick>360)
 	{
 		console.log('Updating Stats.');
-		app_settings.wa_voter_db.collection('stats').find({state:'WA', election:app_settings.current_election}).toArray(function(err, stats) {
+		app_settings.wa_voter_db.collection('stats').find({state:'WA'}).toArray(function(err, stats) {
 			if(err || !stats || stats.length == 0)
 			{
 				console.log('No Stats?');
@@ -220,6 +220,9 @@ function updateStats(arg) {
 			{
 				app_settings.stats = stats[0];
 			
+				app_settings.current_election = app_settings.stats.election;
+				app_settings.as_of = app_settings.stats.date;
+
 				if(app_settings.stats && app_settings.stats.counties)
 				{
 					app_settings.stats.v_count_format = Number(app_settings.stats.v_count).toLocaleString();

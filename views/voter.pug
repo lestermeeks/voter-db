@@ -18,6 +18,7 @@ block content
                     if voter.bstatus
                         h5 Thank You For Voting!
                         h6 Ballot: #{voter.bstatus.status} on #{voter.bstatus.sdate}
+                        h6 Party: #{voter.bstatus.party}
                         if(voter.bstatus.comment  && voter.bstatus.status != 'Accepted')
                             h6 Auditor Comment: #{voter.bstatus.comment}
 
