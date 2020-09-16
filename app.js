@@ -34,6 +34,7 @@ var app_settings = {
 	//as_of: "11/02/2018",
 	as_of:"11/08/2019",
 	elections: [
+		{date: '2020-11-03', desc:'2020: Presidental Election'},		
 		{date: '2020-03-10', desc:'2020: Presidental Primary'},
 		{date: '2019-11-05', desc:'2019: General Election'},
 		{date: '2019-08-06', desc:'2019: State Primary Election'},
