@@ -32,12 +32,12 @@ var app_settings = {
 	//current_last_seen: "10/31/2018",
 	//current_election: "2020-03-10",
 	//as_of: "11/02/2018",
-	as_of:"11/08/2019",
+	//as_of:"11/08/2019",
 	elections: [
 		{date: '2020-11-03', desc:'2020: Presidental Election'},		
-		{date: '2020-03-10', desc:'2020: Presidental Primary'},
+		//{date: '2020-03-10', desc:'2020: Presidental Primary'},
 		{date: '2019-11-05', desc:'2019: General Election'},
-		{date: '2019-08-06', desc:'2019: State Primary Election'},
+		//{date: '2019-08-06', desc:'2019: State Primary Election'},
 		{date: '2018-11-06', desc:'2018: Midterm Election'},
 		//{date: '2018-08-07', desc:'2018: State Primary'},
 		{date: '2017-11-07', desc:'2017: General Election'},
@@ -46,7 +46,7 @@ var app_settings = {
 		//{date: '2016-08-02', desc:'08/02/2016: State Primary'},
 		//{date: '2016-05-24', desc:'05/24/2016: Presidential Primary'},
 		//{date: '2016-02-09', desc:'02/09/2016: Special Election'},
-		{date: '2015-11-03', desc:'2015: General Election'},
+		//{date: '2015-11-03', desc:'2015: General Election'},
 		//{date: '2015-08-04', desc:'08/04/2015: Primary Election'},
 		//{date: '2015-02-10', desc:'2015: Special Election'},
 		//{date: '2014-11-04', desc:'2014: Midterm Election'},
@@ -133,7 +133,7 @@ MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 	});
 */
 
-MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true,  useUnifiedTopology: true  })
 	.then(function(client){
 		app_settings.wa_voter_db = client.db('wa-voter-db');
 		console.log('MongoClient connected');

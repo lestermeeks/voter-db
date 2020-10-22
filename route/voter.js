@@ -28,20 +28,11 @@ router.use(function timeLog (req, res, next) {
 		res.redirect(301, site_settings.fullUrl.toLowerCase());
 	}else{
 	
-		if (req.headers.host == 'www.votewashington.info'){
-			//our primary site
-			site_settings.name = 'Vote Washington';
-			site_settings.header = 'Vote Washington';
-			site_settings.footer = 'VoteWashington.info 2018';
-		} else if(req.headers.host == 'www.votewhatcom.org'){
-			site_settings.name = 'Vote Whatcom';
-			site_settings.header = 'VoteWhatcom.org';
-			site_settings.footer = 'VoteWhatcom.org 2018';
-		} else {
-			site_settings.name = req.headers.host;
-			site_settings.header = req.headers.host;
-			site_settings.footer = req.headers.host + ' 2018';
-		}
+
+		site_settings.name = 'Vote Washington';
+		site_settings.header = 'Vote Washington';
+		site_settings.footer = 'VoteWashington.info 2020';
+
 
 		open_graph = {
 			title: site_settings.name,
@@ -88,6 +79,9 @@ router.get('/wa', function(req,res){
 			counties: app_settings.counties,
 			state_stats: app_settings.stats,
 			as_of:app_settings.as_of,
+						breadcrumbs: [
+							{'title': 'WA', 'url': '/voter/wa'}
+						],
 			hide_search: true
 		}
 	);
@@ -188,11 +182,11 @@ router.get('/wa/id/:id', async function(req,res){
 		      			map_src: '/img/vote-256.png',
 						fullUrl: site_settings.fullUrl,
 						canonical: site_settings.fullUrl,
-						//breadcrumbs: [
-						//	{'title': 'WA', 'url': '/voter/wa'},
-						//	{'title': 'Whatcom', 'url':'/voter/wa/wm'},
-						//	{'title': 'Voter Name', 'url':'/voter/wa/wm/id/'+voter._id, 'active':true}
-						//],
+						breadcrumbs: [
+							{'title': 'WA', 'url': '/voter/wa'},
+							{'title': county.name, 'url':'/voter/wa/'+county.code},
+							{'title': voter.fname + ' ' + voter.lname, 'url':'/voter/wa/wm/id/'+voter._id, 'active':true}
+						],
 						hide_search: true
 					});
 				//}
@@ -406,6 +400,11 @@ router.get('/wa/:county_code', function(req, res, next) {
 			county: county,
 			as_of:app_settings.as_of,
 			canonical: site_settings.fullUrl,
+			breadcrumbs: [
+				{'title': 'WA', 'url': '/voter/wa'},
+				{'title': county.name, 'url':'/voter/wa/'+county.code}
+				
+			],
 			hide_search: true
 		}
 	);

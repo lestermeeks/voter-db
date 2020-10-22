@@ -17,7 +17,7 @@ block content
                     
                     if voter.ballot
                         h5 Thank You For Voting!
-                        h6 Ballot: #{voter.ballot.status} (#{voter.ballot.party}) on #{voter.ballot.sdate}
+                        h6 Ballot: #{voter.ballot.status} on #{voter.ballot.sdate}
                         //h6 Party: 
                         if(voter.ballot.comment  && voter.ballot.status != 'Accepted')
                             h6 Auditor Comment: #{voter.ballot.comment}
@@ -27,20 +27,20 @@ block content
 
                     //h5 Primary Election Ballots out NOW.
 
-            .card.mb-2
+
                 .list-group.list-group-flush
-                    a.list-group-item.list-group-item-action.list-group-item-success.text-center(role="button", target="_blank" href="https://weiapplets.sos.wa.gov/myvote") 
+                    a.list-group-item.list-group-item-action.text-center(role="button", target="_blank" href="https://weiapplets.sos.wa.gov/myvote") 
                         h5 Check MyVote Official Status
                         //span.fa.fa-check.float-right
                         span.small
                             | This site uses public records from the state to estimate your ballot status.  Make sure you double check with your county auditor
                             | or washington state's official website, just click here!
                              
-                    a.list-group-item.list-group-item-action.list-group-item-info(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
+                    a.list-group-item.list-group-item-action(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
                         span Share your voting record on Facebook
                         h5.fab.fa-facebook-f.float-right
 
-                    a.list-group-item.list-group-item-action.list-group-item-secondary(role="button", href="https://www.votewashington.info/")
+                    a.list-group-item.list-group-item-action(role="button", href="https://www.votewashington.info/")
                         span Search for other Washington state voters!
                         span.fa.fa-search.float-right
 
@@ -67,7 +67,7 @@ block content
 
 
         .col-md
-            .card.mb-2
+            //.card.mb-2
                 .card-header.text-center
                     .card-title
                         h5 Current Election Info
