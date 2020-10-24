@@ -25,9 +25,11 @@ var app = express();
 var currentUpdateRequest = null;
 var updateRequestList = [];
 
+
+
 var app_settings = {
 	wa_voter_db: null,
-	stats: null,
+	stats:  {counties:[]},
 	db_counts: {},
 	//current_last_seen: "10/31/2018",
 	//current_election: "2020-03-10",
@@ -232,6 +234,8 @@ function updateStats(arg) {
 					app_settings.stats.turnout_dec = (app_settings.stats.b_count / app_settings.stats.v_count);
 
 					app_settings.stats.counties.forEach(function(county) {
+
+						county.rejected_voters = null;
 
 						county.turnout = (county.b_count / county.v_count * 100).toFixed(1);
 						county.turnout_dec = (county.b_count / county.v_count);
