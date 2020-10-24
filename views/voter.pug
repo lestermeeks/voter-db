@@ -104,19 +104,19 @@ block content
 						h6.text-center (Click on item to explore)
 				
 				.list-group.list-group-flush
-					if (voter & voter.county)
+					if (voter && voter.county)
 						a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase())
 							span Same County:
 							span.float-right #{county.name}
-					if (voter & voter.county & voter.lname)
+					if (voter && voter.county && voter.lname)
 						a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase()+'/name/'+voter.lname.toLowerCase())
 							span Same Last Name:
 							span.float-right #{voter.lname}
-					if (voter & voter.county & voter.zip & voter.street)
+					if (voter && voter.county && voter.zip && voter.street)
 						a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/street/'+voter.zip.toLowerCase()+'/'+voter.street.toLowerCase())
 							span Same Street:
 							span.float-right #{voter.street}
-					if (voter & voter.county & voter.pc)
+					if (voter && voter.county && voter.pc)
 						a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/precinct/'+voter.pc.toLowerCase())
 							span Same Precinct
 							span.float-right #{voter.pc}

@@ -325,7 +325,7 @@ router.get('/wa/search', function(req,res){
 	else
 	{
 		app_settings.wa_voter_db.collection('voter').find(query_obj).sort({lname:1,fname:1}).toArray(function(err, voters) {
-			renderVoterResponse(site_settings.name + ': Voter Search', req, res, err, voters);
+			renderVoterResponse('Voter Search', req, res, err, voters);
 		});
 	}
 });
@@ -348,7 +348,7 @@ router.get('/wa/ld/:ld/ballot/:ballot_status', function(req,res){
 	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
 	wa_voter_db.collection('voter').find({status:'ACTIVE', ld:voter_ld, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		
-		renderVoterResponse(site_settings.name + ': Legislative District Ballot Status ' + voter_ld, req, res, err, voters);
+		renderVoterResponse('Legislative District Ballot Status ' + voter_ld, req, res, err, voters);
 	});
 });
 
@@ -357,7 +357,7 @@ router.get('/wa/ld/:ld', function(req,res){
 	var voter_ld = req.params.ld.trim();
 	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
 	wa_voter_db.collection('voter').find({status:'ACTIVE', ld:voter_ld}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-		renderVoterResponse(site_settings.name + ': Legislative District ' + voter_ld, req, res, err, voters);
+		renderVoterResponse('Legislative District ' + voter_ld, req, res, err, voters);
 	});
 });
 
@@ -366,10 +366,17 @@ router.get('/wa/:county_code/ballot/:ballot_status', function(req,res){
 	var county_code = req.params.county_code.trim().toUpperCase();
 	var ballot_status = req.params.ballot_status.trim().toUpperCase();
 
+	var county = { code:"XX", name:"Unknown"};
+  	app_settings.stats.counties.forEach(function(county_loop){
+  		if(county_loop.code == county_code){
+  			county = county_loop;
+  		}
+  	});
+
 	var wa_voter_db = req.app.get('app_settings').wa_voter_db;
 	wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 		
-		renderVoterResponse(site_settings.name + ': County Ballot Status ' + county_code, req, res, err, voters);
+		renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, err, voters, county);
 	});
 });
 
@@ -455,7 +462,7 @@ router.get('/wa/:county_code/precinct/:precinct', function(req,res){
   	});
 
 	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, pc:voter_precinct}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-		renderVoterResponse(site_settings.name + ': Precinct ' + voter_precinct, req, res, err, voters, county);
+		renderVoterResponse('Precinct ' + voter_precinct, req, res, err, voters, county);
 	});
 });
 
@@ -474,7 +481,7 @@ router.get('/wa/:county_code/street/:zip/:street', function(req,res){
   	});
 
 	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, street:voter_street, zip:voter_zip}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-		renderVoterResponse(site_settings.name + ': Street Name ' + voter_street, req, res, err, voters, county);
+		renderVoterResponse('Street Name ' + voter_street, req, res, err, voters, county);
 	});
 });
 
@@ -506,12 +513,12 @@ router.get('/wa/:county_code/search', function(req,res){
 
 	//render blank search again if no query parameters available
 	if (!query_obj.lname && !query_obj.fname) {
-		renderVoterResponse(site_settings.name + ': Voter Search', req, res, null, null, county);
+		renderVoterResponse('County Voter Search', req, res, null, null, county);
 	}
 	else
 	{
 		app_settings.wa_voter_db.collection('voter').find(query_obj).sort({lname:1,fname:1}).toArray(function(err, voters) {
-			renderVoterResponse(site_settings.name + ': Voter Search', req, res, err, voters, county);
+			renderVoterResponse('County Voter Search', req, res, err, voters, county);
 		});
 	}
 });
@@ -531,7 +538,7 @@ router.get('/wa/:county_code/name/:last', function(req,res){
   	});
 	//grab the dataset
 	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', lname:voter_last_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-		renderVoterResponse(site_settings.name + ': Voter Last Name ' + voter_last_name, req, res, err, voters, county);
+		renderVoterResponse('Voter Last Name ' + voter_last_name, req, res, err, voters, county);
 	});
 });
 
@@ -551,7 +558,7 @@ router.get('/wa/:county_code/name/:last/:first', function(req,res){
   	});
 
 	app_settings.wa_voter_db.collection('voter').find({status:'ACTIVE', lname:voter_last_name, fname:voter_first_name, county:county_code}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-		renderVoterResponse(site_settings.name + ': Voter Name ' + voter_last_name + ', ' + voter_first_name, req, res, err, voters, county);
+		renderVoterResponse('Voter Name ' + voter_last_name + ', ' + voter_first_name, req, res, err, voters, county);
 	});
 });
 
@@ -582,6 +589,14 @@ function renderVoterResponse (title, req, res, err, voters, county)
 
     } else {
       //updateDoc._id = req.params.id;
+	  var breadcrumbs = [];
+
+	  breadcrumbs.push({'title': 'WA', 'url': '/voter/wa'});
+	  if(county)
+		breadcrumbs.push({'title': county.name, 'url':'/voter/wa/'+county.code});
+
+	breadcrumbs.push({'title':title});
+
       res.render('voter_list', {
         title: title,
         header: site_settings.header,
@@ -590,6 +605,7 @@ function renderVoterResponse (title, req, res, err, voters, county)
         counties: req.app.get('app_settings').counties,
         og_title: title,
         voters: voters,
+		breadcrumbs: breadcrumbs,
         hide_search: true
       });
     }
