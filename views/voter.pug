@@ -3,15 +3,10 @@ extends layout
 block content
 	.row
 		.col-md
-
-		
 			.card.mb-2
-				//if voter.ballot
-				//    img.card-img-top(src="/img/voted-2018-midterm-small.jpg" alt="Vote Image")
-				//else
-				//    img.card-img-top(src="/img/vote-2018-midterm-small.jpg" alt="Vote Image")
 
-
+				if (map_src)
+					img.card-img-top(src=map_src)
 				.card-body.bg-primary.text-light.text-center
 					h4 #{voter.fname} #{voter.lname}
 					
@@ -21,12 +16,8 @@ block content
 						//h6 Party: 
 						if(voter.ballot.comment  && voter.ballot.status != 'Accepted')
 							h6 Auditor Comment: #{voter.ballot.comment}
-
 					else
 						h5 We are still waiting for your ballot!
-
-					//h5 Primary Election Ballots out NOW.
-
 
 				.list-group.list-group-flush
 					a.list-group-item.list-group-item-action.text-center(role="button", target="_blank" href="https://weiapplets.sos.wa.gov/myvote") 
@@ -67,36 +58,6 @@ block content
 
 
 		.col-md
-			//.card.mb-2
-				.card-header.text-center
-					.card-title
-						h5 Current Election Info
-						h6 (as of #{as_of})
-				
-				.list-group.list-group-flush
-					if state_stats && state_stats.turnout
-						.list-group-item
-							h6 
-								i.fa.fa-map.fa-fw
-								| &nbsp;Washington State:  
-								span.float-right #{state_stats.turnout}%
-					if county && county.turnout
-						.list-group-item
-							h6
-								i.fa.fa-map-marker.fa-fw()   
-								| &nbsp;#{county.name} County:
-								span.float-right #{county.turnout}%
-					.list-group-item
-						h6
-							i.fa.fa-street-view.fa-fw()   
-							| &nbsp;Precinct #{voter.pc}:
-							span.float-right #{pc_turnout}%
-					.list-group-item
-						h6
-							i.fa.fa-car.fa-fw()   
-							span Street #{voter.street}:
-							span.float-right #{street_turnout}%
-
 			.card.mb-2
 				.card-header
 					.card-title

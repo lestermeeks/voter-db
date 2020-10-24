@@ -180,7 +180,7 @@ router.get('/wa/id/:id', async function(req,res){
 						//near_voters: near_voters,
 						street_turnout: st_percentage,
 		      			pc_turnout: pc_turnout,
-		      			map_src: '/img/vote-256.png',
+		      			map_src: '/img/vote-small.jpg',
 						fullUrl: site_settings.fullUrl,
 						canonical: site_settings.fullUrl,
 						breadcrumbs: [
