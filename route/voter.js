@@ -129,23 +129,24 @@ router.get('/wa/id/:id', async function(req,res){
 				voter_utilities.setVoterStatus(precinct_voters);
 				
 				neighbors = [];
-				precinct_voters.forEach(function(precinct_voter) {
+				if(precinct_voters){
+					precinct_voters.forEach(function(precinct_voter) {
 
-					if(precinct_voter.bstatus)
-					{
-						pc_current++;
-					}
-
-					if (precinct_voter.street == voter.street)
-					{
-						neighbors.push(precinct_voter);
 						if(precinct_voter.bstatus)
 						{
-							street_current++;
+							pc_current++;
 						}
-					}
-				});
-			
+
+						if (precinct_voter.street == voter.street)
+						{
+							neighbors.push(precinct_voter);
+							if(precinct_voter.bstatus)
+							{
+								street_current++;
+							}
+						}
+					});
+				}
 				var st_percentage;
 				if(neighbors.length > 0)
 					st_percentage = Math.round(street_current / neighbors.length * 100);

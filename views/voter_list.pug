@@ -1,47 +1,48 @@
 extends layout
 
 block content
-    .card
-        .card-header
-            .card-title
-                h4.text-center #{voters.length} Voters
+	.card
+		.card-header
+			.card-title
+				h4.text-center #{voters.length} Voters
+				small Temporarily rejected ballots represent a very small portion of the ballots processed and are a reflection of a functioning review process.  Contact your country election officials for information on how rejected ballots can be resolved.
 
-        .list-group.list-group-flush
-            each voter in voters
-                if voter.ballot
-                    if voter.ballot.status == "Accepted"
-                        a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/wa/id/'+voter._id.toLowerCase()) 
-                            h3.fa.fa-thumbs-up.fa-fw.float-right
-                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                            .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
-                            //.ml-2.small Auditor Comment: #{voter.ballot.comment}
+		.list-group.list-group-flush
+			each voter in voters
+				if voter.ballot
+					if voter.ballot.status == "Accepted"
+						a.list-group-item.list-group-item-action.list-group-item-success(href='/voter/wa/id/'+voter._id.toLowerCase()) 
+							h3.fa.fa-thumbs-up.fa-fw.float-right
+							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+							//.ml-2.small Auditor Comment: #{voter.ballot.comment}
 
-                    else if voter.ballot.status == "Received"
-                        a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/wa/id/'+voter._id.toLowerCase()) 
-                            h3.fa.fa-fw.float-right
-                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                            .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
-                            if(voter.ballot.comment)
-                                .ml-2.small Auditor Comment: #{voter.ballot.comment}
+					else if voter.ballot.status == "Received"
+						a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/wa/id/'+voter._id.toLowerCase()) 
+							h3.fa.fa-fw.float-right
+							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+							if(voter.ballot.comment)
+								.ml-2.small Auditor Comment: #{voter.ballot.comment}
 
-                    else if voter.ballot.status == "Rejected"
-                        a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
-                            h3.fa.fa-thumbs-down.fa-fw.float-right
-                            .ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
-                            .ml-2.small #{voter.street} #{voter.city}
-                            .ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
-                            if(voter.ballot.comment)
-                                .ml-2.small Auditor Comment: #{voter.ballot.comment}
-                else
-                    a.list-group-item.list-group-item-action(href='/voter/wa/id/'+voter._id.toLowerCase()) 
-                        h3.fa.fa-fw.float-right
-                        .ml-0 #{voter.lname}, #{voter.fname}
-                        .ml-2.small #{voter.street} #{voter.city}
-                        .ml-2.small Ballot Status: None
+					else if voter.ballot.status == "Rejected"
+						a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
+							h3.fa.fa-thumbs-down.fa-fw.float-right
+							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
+							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
+							if(voter.ballot.comment)
+								.ml-2.small Auditor Comment: #{voter.ballot.comment}
+				else
+					a.list-group-item.list-group-item-action(href='/voter/wa/id/'+voter._id.toLowerCase()) 
+						h3.fa.fa-fw.float-right
+						.ml-0 #{voter.lname}, #{voter.fname}
+						.ml-2.small #{voter.street} #{voter.city}
+						.ml-2.small Ballot Status: None
 
 
-            .list-group-item.text-center()
-                i.fa.fa-thumbs-up.fa-fw() 
-                | Voted in the 2020 Trump/Biden General Election&nbsp;
+			.list-group-item.text-center()
+				i.fa.fa-thumbs-up.fa-fw() 
+				| Voted in the 2020 Trump/Biden General Election&nbsp;
