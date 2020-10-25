@@ -8,7 +8,7 @@ block content
 				if (map_src)
 					img.card-img-top(src=map_src)
 
-				if voter.staus != 'ACTIVE'
+				if voter.status != 'ACTIVE'
 					.card-body.bg-warning.text-light.text-center
 						h4 #{voter.fname} #{voter.mname} #{voter.lname}
 						h6 (Voter Status: #{voter.status})
