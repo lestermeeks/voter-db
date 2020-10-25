@@ -19,7 +19,7 @@ router.use(function timeLog (req, res, next) {
 	
 	current_faq = app_settings.faqs[app_settings.faq_index];
 	app_settings.faq_index = app_settings.faq_index + 1;
-	console.log(app_settings.faq_index);
+	//console.log(app_settings.faq_index);
 	if(app_settings.faq_index >= app_settings.faqs.length)
 		app_settings.faq_index = 0;
 
