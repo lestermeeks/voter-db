@@ -32,6 +32,25 @@ var app_settings = {
 	wa_voter_db: null,
 	stats:  {counties:[]},
 	db_counts: {},
+	faq_index: 0,
+	faqs:[
+		{
+			q: 'When can I expect the next ballot update?',
+			a: 'Ballot status last updated 10/23, next ballot update expected the evening of 10/26.'
+		},
+		{
+			q: 'How does VoteWashington.info get this information?',
+			a: 'Once a month the state releases a complete registered voter list if requested.  I process this list into the format you see here.  During the last 2 weeks of an election the state also releases daily ballot status updates, and I pull them in when released and update the site daily.'
+		},
+		{
+			q: 'How does a voter know what the election checkers are using to verify the validity of their signature?',
+			a: 'The first signature used to compare a ballot to is the person\'s voter registration. The secondary signature is the one from the Department of Licensing (driver license, state ID). Sometimes those are the same if the person registered to vote when they renew their license. The auditor\'s office collects signatures from multiple areas in the voter file. During the Canvassing Board for the Primary I noticed on the screen that the signature being used to compare came from the Corrections system. Absolutely every effort is made to get a cast ballot counted.'
+		},
+		{
+			q: 'Assuming that a voter mails or drops their ballot in the ballot box by 8 p.m. on election night, how long does a voter have to correct any issues with the rejection of their ballot?',
+			a: 'Any ballot that is postmarked or received by November 3rd has the opportunity to be counted. If the ballot arriving at the last minute is challenged the voter has until just before the election is certified to rehabilitate their signature. This election the Canvassing Board meets on the 23rd of November. A voter has until then to fix any problems with their otherwise eligible ballot.'
+		},
+	],
 	//current_last_seen: "10/31/2018",
 	//current_election: "2020-03-10",
 	//as_of: "11/02/2018",

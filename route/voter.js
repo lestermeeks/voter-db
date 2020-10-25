@@ -6,7 +6,7 @@ const util = require('util');
 var voter_utilities = require('../tools/voter_utilities');
 
 var app_settings, open_graph, site_settings;
-
+var current_faq;
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
 	app_settings = req.app.get('app_settings');
@@ -17,6 +17,12 @@ router.use(function timeLog (req, res, next) {
 		fullUrl: redirect_protocol + req.get('host') + req.originalUrl
 	};
 	
+	current_faq = app_settings.faqs[app_settings.faq_index];
+	app_settings.faq_index = app_settings.faq_index + 1;
+	console.log(app_settings.faq_index);
+	if(app_settings.faq_index >= app_settings.faqs.length)
+		app_settings.faq_index = 0;
+
 	/*
 	if (req.headers.host != 'www.votewashington.info'){
 		//catch our old website names and redirect them in to votewashington with lower case url
@@ -70,9 +76,11 @@ router.get('/wa', function(req,res){
 	open_graph.title = site_settings.name + ' - State Voter Information';
 	open_graph.desc = 'Explore Washington state voter information.';
 
+
+
 	res.render('state',
 		{
-			alert: app_settings.alert,
+			alert: current_faq,
 			title: site_settings.name + ': State Info',
 			header: site_settings.header,
 			footer: site_settings.footer,
