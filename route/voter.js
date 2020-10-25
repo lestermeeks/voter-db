@@ -72,6 +72,7 @@ router.get('/wa', function(req,res){
 
 	res.render('state',
 		{
+			alert: app_settings.alert,
 			title: site_settings.name + ': State Info',
 			header: site_settings.header,
 			footer: site_settings.footer,
@@ -167,7 +168,8 @@ router.get('/wa/id/:id', async function(req,res){
                 }
 				*/
 
-					res.render('voter', { 
+					res.render('voter', {
+						alert: app_settings.alert,
 						title: site_settings.name + ' Voter History: ' + voter.fname + ' ' + voter.lname,
 						header: site_settings.header,
 						footer: site_settings.footer,
@@ -411,6 +413,7 @@ router.get('/wa/:county_code', function(req, res, next) {
 
 	res.render('county',
 		{ 
+			alert: app_settings.alert,
 			title: site_settings.name + ' - ' + county.name +' County Voter Information',
 			header: site_settings.header,
 			footer: site_settings.footer,
@@ -610,6 +613,7 @@ function renderVoterResponse (title, req, res, err, voters, county)
 	breadcrumbs.push({'title':title});
 
       res.render('voter_list', {
+	  	alert: app_settings.alert,
         title: title,
         header: site_settings.header,
         footer: site_settings.footer,

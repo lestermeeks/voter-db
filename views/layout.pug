@@ -1,71 +1,73 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name="viewport", content='width=device-width, initial-scale=1, shrink-to-fit=no')
-        if( subtitle )
-            title= title +' '+ subtitle
-        else
-            title= title 
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name="viewport", content='width=device-width, initial-scale=1, shrink-to-fit=no')
+		if( subtitle )
+			title= title +' '+ subtitle
+		else
+			title= title 
 
-        if canonical
-            link(rel='canonical', href=canonical)
-        
-        if og
-            meta(property="og:url",           content=og.url)
-            meta(property="og:type",          content="website")
-            meta(property="og:title",         content=og.title)
-            meta(property="og:description",   content=og.desc)
-            meta(property="og:image",         content=og.img)
+		if canonical
+			link(rel='canonical', href=canonical)
+		
+		if og
+			meta(property="og:url",           content=og.url)
+			meta(property="og:type",          content="website")
+			meta(property="og:title",         content=og.title)
+			meta(property="og:description",   content=og.desc)
+			meta(property="og:image",         content=og.img)
 
-        include ./ga_tag.pug
-        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
-        //link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css", integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO", crossorigin="anonymous")
-        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.3.1/css/all.css", integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU", crossorigin="anonymous")
-        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css")
-        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css")
+		include ./ga_tag.pug
+		link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
+		//link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css", integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO", crossorigin="anonymous")
+		link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.3.1/css/all.css", integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU", crossorigin="anonymous")
+		link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css")
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css")
 
-     
-    body.container-fluid.bg-light
-        .navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-2
-            a.navbar-brand.mx-auto(href="/") #{header}
-            
-        if breadcrumbs
-            nav( aria-label="breadcrumb")
-                ol.breadcrumb
-                    each crumb in breadcrumbs
-                        if crumb.active
-                            li.breadcrumb-item.active(aria-current="page")
-                                a( href=crumb.url ) #{crumb.title}
-                        else
-                            li.breadcrumb-item
-                                a( href=crumb.url ) #{crumb.title}
-
-
-        if !hide_search && county
-            form(action='/voter/wa/' + county.code + '/search').mb-2
-                .input-group
-                    input.form-control(type='text', placeholder='first name' name='fname')
-                    input.form-control(type='text', placeholder='last name' name='lname')
-                    .input-group-append
-                        button.btn.btn-primary(type='submit') Search
-
-    
-        block content
+	 
+	body.container-fluid.bg-light
+		.navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-2
+			a.navbar-brand.mx-auto(href="/") #{header}
+		if alert
+			.alert.alert-warning(role='alert')
+				span #{alert}
+		if breadcrumbs
+			nav( aria-label="breadcrumb")
+				ol.breadcrumb
+					each crumb in breadcrumbs
+						if crumb.active
+							li.breadcrumb-item.active(aria-current="page")
+								a( href=crumb.url ) #{crumb.title}
+						else
+							li.breadcrumb-item
+								a( href=crumb.url ) #{crumb.title}
 
 
-        .card.mt-2.mb-3
-            .card-body
-                .small.font-italic.text-center
-                    |#{header} is a project to assist with the access to public information published by the state of Washington.  #{header} is not
-                    |affiliated with any campaign group or political organization. Use of this site for commerical purposes is forbidden.
-                    |Use of the public disclosure data on this site for commercial purposes is illegal.
-            .card-footer
-                .small.font-italic.text-right
-                    | #{footer}
+		if !hide_search && county
+			form(action='/voter/wa/' + county.code + '/search').mb-2
+				.input-group
+					input.form-control(type='text', placeholder='first name' name='fname')
+					input.form-control(type='text', placeholder='last name' name='lname')
+					.input-group-append
+						button.btn.btn-primary(type='submit') Search
+
+	
+		block content
 
 
-        //script ( src="https://code.jquery.com/jquery-3.3.1.slim.min.js", integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo", crossorigin="anonymous")
-        //script ( src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js", integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49", crossorigin="anonymous")
-        script ( src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy", crossorigin="anonymous")
+		.card.mt-2.mb-3
+			.card-body
+				.small.font-italic.text-center
+					|#{header} is a project to assist with the access to public information published by the state of Washington.  #{header} is not
+					|affiliated with any campaign group or political organization. Use of this site for commerical purposes is forbidden.
+					|Use of the public disclosure data on this site for commercial purposes is illegal.
+			.card-footer
+				.small.font-italic.text-right
+					| #{footer}
+
+
+		//script ( src="https://code.jquery.com/jquery-3.3.1.slim.min.js", integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo", crossorigin="anonymous")
+		//script ( src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js", integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49", crossorigin="anonymous")
+		script ( src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy", crossorigin="anonymous")
