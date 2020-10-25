@@ -7,7 +7,15 @@ block content
 
 				if (map_src)
 					img.card-img-top(src=map_src)
-				if voter.ballot && voter.ballot.status == 'Rejected'
+
+				if voter.staus != 'ACTIVE'
+					.card-body.bg-warning.text-light.text-center
+						h4 #{voter.fname} #{voter.mname} #{voter.lname}
+						h6 (Voter Status: #{voter.status})
+						p
+						h5 This voter is not an active voter record.
+
+				else if voter.ballot && voter.ballot.status == 'Rejected'
 					.card-body.bg-danger.text-light.text-center
 						h4 #{voter.fname} #{voter.mname} #{voter.lname}
 						h6 (Ballot #{voter.ballot.status} on #{voter.ballot.sdate})
@@ -28,14 +36,15 @@ block content
 						else
 							h5 We are still waiting for your ballot!
 
+			.card.mb-2
+				.card-header.text-center
+					.card-title
+						h5 Voter Links
 				.list-group.list-group-flush
-					a.list-group-item.list-group-item-action.text-center(role="button", target="_blank" href="https://weiapplets.sos.wa.gov/myvote") 
-						h5 Check MyVote Official Status
-						//span.fa.fa-check.float-right
-						span.small
-							| This site uses public records from the state to estimate your ballot status.  Make sure you double check with your county auditor
-							| or washington state's official website, just click here!
 							 
+					a.list-group-item.list-group-item-action(target="_blank" href="https://weiapplets.sos.wa.gov/myvote" )
+						span Check Official Statue Ballot Status
+						h5.fa.fa-check.float-right
 					a.list-group-item.list-group-item-action(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
 						span Share your voting record on Facebook
 						h5.fab.fa-facebook-f.float-right
@@ -51,7 +60,7 @@ block content
 						
 				.list-group.list-group-flush
 					each election in voter._elections_past
-						.list-group-item
+						.list-group-item.disabled
 							span.align-middle #{election.desc}
 							if election.status === true
 								h4.fa.fa-smile.fa-fw.text-success.float-right

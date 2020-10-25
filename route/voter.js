@@ -80,9 +80,6 @@ router.get('/wa', function(req,res){
 			counties: app_settings.counties,
 			state_stats: app_settings.stats,
 			as_of:app_settings.as_of,
-						breadcrumbs: [
-							{'title': 'WA', 'url': '/voter/wa'}
-						],
 			hide_search: true
 		}
 	);
@@ -517,6 +514,7 @@ router.get('/wa/:county_code/search', function(req,res){
 	
     //build query, basic case insensitive substring regex
 	var query_obj = {status:'ACTIVE', county:county_code};
+
 	if (lname) {
 		query_obj.lname= new RegExp('^'+lname.trim());
 	}

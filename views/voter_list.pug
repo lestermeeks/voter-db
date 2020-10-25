@@ -15,6 +15,7 @@ block content
 							h3.fa.fa-thumbs-up.fa-fw.float-right
 							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
 							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
 							//.ml-2.small Auditor Comment: #{voter.ballot.comment}
 
@@ -23,6 +24,7 @@ block content
 							h3.fa.fa-fw.float-right
 							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
 							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
 							if(voter.ballot.comment)
 								.ml-2.small Auditor Comment: #{voter.ballot.comment}
@@ -32,6 +34,7 @@ block content
 							h3.fa.fa-thumbs-down.fa-fw.float-right
 							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
 							.ml-2.small #{voter.street} #{voter.city}
+							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
 							if(voter.ballot.comment)
 								.ml-2.small Auditor Comment: #{voter.ballot.comment}
@@ -40,6 +43,7 @@ block content
 						h3.fa.fa-fw.float-right
 						.ml-0 #{voter.lname}, #{voter.fname}
 						.ml-2.small #{voter.street} #{voter.city}
+						.ml-2.small Voter Status: #{voter.status}
 						.ml-2.small Ballot Status: None
 
 
