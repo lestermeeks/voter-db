@@ -31,6 +31,9 @@ html
 		.navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-2
 			a.navbar-brand.mx-auto(href="/") #{header}
 
+		.alert.alert-info(role='alert')
+			p VoteWashington.info is not collecting any user information and no user will never be asked to enter any personally identifiable information.  We only use official state ballot data released by the WA Secretary of State, to provide enhanced access to your public voter information that is released #[a(href='https://www.sos.wa.gov/elections/research/') here] as a public service to our fellow Washington residents.  Check your official ballot status at #[a(href='https://voter.votewa.gov/') MyVote], and contact your county auditor for resolution of any ballot issues.
+
 		if alert
 			.alert.alert-info(role='alert')
 				span #{alert}

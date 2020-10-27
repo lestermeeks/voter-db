@@ -28,7 +28,7 @@ var updateRequestList = [];
 
 
 var app_settings = {
-	alert: 'Ballot status last updated 10/26, next ballot update expected the evening of 10/27.',
+	//alert: 'We use official state ballot data released by the WA Secretary of State, to provide enhanced access to your voter information.  VoteWashington.info is not associated with any state agency, and relies on the public disclosure of official data found here to provide enchanced access to real voter data.',
 	wa_voter_db: null,
 	stats:  {counties:[]},
 	db_counts: {},
