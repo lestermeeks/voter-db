@@ -10,21 +10,21 @@ block content
 						h5 #{county.name} County Current Results
 						h6 (as of #{as_of})
 
-				.list-group-item.disabled
+				.list-group-item.disabled.text-primary
 					span Total Registered Voters:
 					span.float-right #{county.v_count} (Rank #{county.voter_rank})
-				.list-group-item.disabled
+				.list-group-item.disabled.text-primary
 					span Total Ballots Counted:
 					span.float-right #{county.b_count}
-				.list-group-item.disabled
+				.list-group-item.disabled.text-primary
 					span County Turnout Percentage:
 					span.float-right #{county.turnout}% (Rank #{county.turnout_rank})
 
-				a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/' +county.code.toLowerCase() + '/ballot/rejected')
+				a.list-group-item.list-group-item-action.text-danger(href='/voter/wa/' +county.code.toLowerCase() + '/ballot/rejected')
 					span.text-center County Rejected Ballot List
 					h4.fa.fa-bars.fa-fw.float-right
 
-				a.list-group-item.list-group-item-action(role="button", href="/voter/about")
+				a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
 					span About VoteWashington.info
 					span.fa.fa-question.float-right
 					

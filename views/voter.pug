@@ -42,18 +42,18 @@ block content
 						h5 Voter Links
 				.list-group.list-group-flush
 							 
-					a.list-group-item.list-group-item-action(target="_blank" href="https://weiapplets.sos.wa.gov/myvote" )
+					a.list-group-item.list-group-item-action.text-primary(target="_blank" href="https://weiapplets.sos.wa.gov/myvote" )
 						span Check Official Statue Ballot Status
 						h5.fa.fa-check.float-right
-					a.list-group-item.list-group-item-action(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
+					a.list-group-item.list-group-item-action.text-primary(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
 						span Share your voting record on Facebook
 						h5.fab.fa-facebook-f.float-right
 
-					a.list-group-item.list-group-item-action(role="button", href="/voter/wa")
+					a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/wa")
 						span Search for other Washington state voters!
 						span.fa.fa-search.float-right
 
-					a.list-group-item.list-group-item-action(role="button", href="/voter/about")
+					a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
 						span About VoteWashington.info
 						span.fa.fa-question.float-right
 
@@ -64,7 +64,7 @@ block content
 						
 				.list-group.list-group-flush
 					each election in voter._elections_past
-						.list-group-item.disabled
+						.list-group-item.disabled.text-primary
 							span.align-middle #{election.desc}
 							if election.status === true
 								h4.fa.fa-smile.fa-fw.text-success.float-right
@@ -88,28 +88,28 @@ block content
 				
 				.list-group.list-group-flush
 					if (voter && voter.county)
-						a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase())
+						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' +voter.county.toLowerCase())
 							span Same County:
 							span.float-right #{county.name}
 					if (voter && voter.county && voter.lname)
-						a.list-group-item.list-group-item-action(href='/voter/wa/' +voter.county.toLowerCase()+'/name/'+voter.lname.toLowerCase())
+						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' +voter.county.toLowerCase()+'/name/'+voter.lname.toLowerCase())
 							span Same Last Name:
 							span.float-right #{voter.lname}
 					if (voter && voter.county && voter.zip && voter.street)
-						a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/street/'+voter.zip.toLowerCase()+'/'+voter.street.toLowerCase())
+						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' + voter.county.toLowerCase() + '/street/'+voter.zip.toLowerCase()+'/'+voter.street.toLowerCase())
 							span Same Street:
 							span.float-right #{voter.street}
 					if (voter && voter.county && voter.pc)
-						a.list-group-item.list-group-item-action(href='/voter/wa/' + voter.county.toLowerCase() + '/precinct/'+voter.pc.toLowerCase())
+						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' + voter.county.toLowerCase() + '/precinct/'+voter.pc.toLowerCase())
 							span Same Precinct
 							span.float-right #{voter.pc}
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Same City:
 						span.float-right #{voter.city}
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Legislative District:
 						span.float-right #{voter.ld}
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Congressional District:
 						span.float-right #{voter.cd}
 
@@ -118,16 +118,16 @@ block content
 					.card-title
 						h5.text-center Other Voter Info
 				.list-group.list-group-flush
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Voter ID: 
 						span.float-right #{voter._id}
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Registered:
 						span.float-right #{voter.reg} 
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Last Voted: 
 						span.float-right #{voter.last_voted}
-					.list-group-item.disabled
+					.list-group-item.disabled.text-primary
 						span Status:
 						span.float-right #{voter.status}
  

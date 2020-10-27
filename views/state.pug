@@ -12,21 +12,21 @@ block content
 
 				if state_stats
 					.list-group.list-group-flush
-						.list-group-item.disabled
+						.list-group-item.disabled.text-primary
 							span Registered Voters:
 							span.float-right #{state_stats.v_count_format}
-						.list-group-item.disabled
+						.list-group-item.disabled.text-primary
 							span Ballots Received:
 							span.float-right #{state_stats.b_count_format}
-						.list-group-item.disabled
+						.list-group-item.disabled.text-primary
 							span Turnout:
 							span.float-right #{state_stats.turnout}%
 							//.progress
 								.progress-bar(role="progressbar", style="width: 41%", aria-valuenow="41", aria-valuemin="0", aria-valuemax="100")
 				else
-					.list-group-item.text-center
+					.list-group-item.text-center.text-primary
 						span No Current Election Stats
-				a.list-group-item.list-group-item-action(role="button", href="/voter/about")
+				a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
 					span About VoteWashington.info
 					span.fa.fa-question.float-right
 			.card.mb-2
