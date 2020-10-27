@@ -2,10 +2,10 @@ extends layout
 
 block content
 	.card
-		.card-header
+		.card-header.text-center
 			.card-title
 				h4.text-center #{voters.length} Voters
-				small Temporarily rejected ballots represent a very small portion of the ballots processed and are a reflection of a functioning review process.  Contact your country election officials for information on how rejected ballots can be resolved.
+				small Ballots marked Rejected can be resolved with your county auditor, please contact them for official information on your ballot status.
 
 		.list-group.list-group-flush
 			each voter in voters

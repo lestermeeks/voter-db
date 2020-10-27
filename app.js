@@ -28,7 +28,7 @@ var updateRequestList = [];
 
 
 var app_settings = {
-	alert: 'Ballot status last updated 10/23, next ballot update expected the evening of 10/26.',
+	alert: 'Ballot status last updated 10/26, next ballot update expected the evening of 10/27.',
 	wa_voter_db: null,
 	stats:  {counties:[]},
 	db_counts: {},

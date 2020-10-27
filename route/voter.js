@@ -17,11 +17,11 @@ router.use(function timeLog (req, res, next) {
 		fullUrl: redirect_protocol + req.get('host') + req.originalUrl
 	};
 	
-	current_faq = app_settings.faqs[app_settings.faq_index];
-	app_settings.faq_index = app_settings.faq_index + 1;
+	//current_faq = app_settings.faqs[app_settings.faq_index];
+	//app_settings.faq_index = app_settings.faq_index + 1;
 	//console.log(app_settings.faq_index);
-	if(app_settings.faq_index >= app_settings.faqs.length)
-		app_settings.faq_index = 0;
+	//if(app_settings.faq_index >= app_settings.faqs.length)
+	//	app_settings.faq_index = 0;
 
 	/*
 	if (req.headers.host != 'www.votewashington.info'){
@@ -68,6 +68,32 @@ router.get('/id/:id', function(req,res){
 	res.redirect(301, '/voter/wa/id/' + voter_id);
 });
 
+router.get('/about', function(req,res){ 
+
+	//var app_settings = req.app.get('app_settings');
+	//og.title = 
+
+	open_graph.title = site_settings.name + ' - State Voter Information';
+	open_graph.desc = 'Explore Washington state voter information.';
+
+
+
+	res.render('about_us',
+		{
+			alert: app_settings.alert,
+			title: 'About VoteWashington.Info',
+			header: site_settings.header,
+			footer: site_settings.footer,
+			og: open_graph,
+			counties: app_settings.counties,
+			state_stats: app_settings.stats,
+			as_of:app_settings.as_of,
+			faqs: app_settings.faqs,
+			hide_search: true
+		}
+	);
+});
+
 router.get('/wa', function(req,res){ 
 
 	//var app_settings = req.app.get('app_settings');
@@ -80,7 +106,7 @@ router.get('/wa', function(req,res){
 
 	res.render('state',
 		{
-			alert: current_faq,
+			alert: app_settings.alert,
 			title: site_settings.name + ': State Info',
 			header: site_settings.header,
 			footer: site_settings.footer,
