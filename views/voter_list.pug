@@ -3,12 +3,12 @@ extends layout
 block content
 
 	if county
-		.card
+		.card.mb-2
 			.card-header.text-center
 				.card-title
-					h4.text-center County Info
+					h4.text-center #{county.name} County Ballot Counts By Status
 				
-			.list-group.list-group-flush
+			.list-group.list-group-flush.primary-text
 				if county.accepted_ballots
 					- var accepted_percent = (county.accepted_ballots/county.b_count * 100).toFixed(1);
 					.list-group-item.disabled.text-primary
@@ -24,14 +24,13 @@ block content
 					.list-group-item.disabled.text-primary
 						span Challenged Ballots:
 						span.float-right #{county.rejected_ballots} (#{rejected_percent}%)
+			.card-footer.text-center
+				small Ballots will first be received and then will either get accepted or challenged.  Challenged ballots are not permenently rejected, they can be resolved through a process called curing, you can make sure your vote is counted if it has been challenged by contacting your county auditor's office.
 	
 	.card
 		.card-header.text-center
 			.card-title
-				h4.text-center #{voters.length} Voters
-				small Ballots marked Rejected can be resolved with your county auditor, please contact them for official information on your ballot status.
-
-
+				h4.text-center Search Results: #{voters.length} Voters
 
 		.list-group.list-group-flush
 			each voter in voters
