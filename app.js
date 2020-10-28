@@ -36,7 +36,7 @@ var app_settings = {
 	faqs:[
 		{
 			q: 'When can I expect the next ballot update?',
-			a: 'Ballot status last updated 10/23, next ballot update expected the evening of 10/26.'
+			a: 'Ballot status last updated 10/27, next ballot update expected the evening of 10/28.'
 		},
 		{
 			q: 'How does VoteWashington.info get this information?',
