@@ -1,11 +1,37 @@
 extends layout
 
 block content
+
+	if county
+		.card
+			.card-header.text-center
+				.card-title
+					h4.text-center County Info
+				
+			.list-group.list-group-flush
+				if county.accepted_ballots
+					- var accepted_percent = (county.accepted_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span Accepted Ballots:
+						span.float-right #{county.accepted_ballots} (#{accepted_percent}%)
+				if county.received_ballots
+					- var received_percent = (county.received_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span Received Ballots:
+						span.float-right #{county.received_ballots} (#{received_percent}%)
+				if county.rejected_ballots
+					- var rejected_percent = (county.rejected_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span Challenged Ballots:
+						span.float-right #{county.rejected_ballots} (#{rejected_percent}%)
+	
 	.card
 		.card-header.text-center
 			.card-title
 				h4.text-center #{voters.length} Voters
 				small Ballots marked Rejected can be resolved with your county auditor, please contact them for official information on your ballot status.
+
+
 
 		.list-group.list-group-flush
 			each voter in voters

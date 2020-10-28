@@ -14,11 +14,27 @@ block content
 					span Total Registered Voters:
 					span.float-right #{county.v_count} (Rank #{county.voter_rank})
 				.list-group-item.disabled.text-primary
+					- var turnout = (county.b_count/county.v_count * 100).toFixed(1);
 					span Total Ballots Counted:
-					span.float-right #{county.b_count}
-				.list-group-item.disabled.text-primary
-					span County Turnout Percentage:
-					span.float-right #{county.turnout}% (Rank #{county.turnout_rank})
+					span.float-right #{county.b_count} (#{turnout}%)
+				if county.accepted_ballots
+					- var accepted_percent = (county.accepted_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span.ml-2 - Accepted Ballots:
+						span.float-right #{county.accepted_ballots} (#{accepted_percent}%)
+				if county.received_ballots
+					- var received_percent = (county.received_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span.ml-2 - Received Ballots:
+						span.float-right #{county.received_ballots} (#{received_percent}%)
+				if county.rejected_ballots
+					- var rejected_percent = (county.rejected_ballots/county.b_count * 100).toFixed(1);
+					.list-group-item.disabled.text-primary
+						span.ml-2 - Challenged Ballots:
+						span.float-right #{county.rejected_ballots} (#{rejected_percent}%)
+				//.list-group-item.disabled.text-primary
+				//	span County Turnout Percentage:
+				//	span.float-right #{county.turnout}% (Rank #{county.turnout_rank})
 
 				a.list-group-item.list-group-item-action.text-danger(href='/voter/wa/' +county.code.toLowerCase() + '/ballot/rejected')
 					span.text-center County Challenged Ballot List
