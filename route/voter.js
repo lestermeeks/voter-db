@@ -410,18 +410,18 @@ router.get('/wa/:county_code/ballot/:ballot_status', function(req,res){
   		}
   	});
 
-	if(county.rejected_voters)
-	{
-		renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, null, county.rejected_voters, county);
-	}
-	else
-	{
+	//if(county.rejected_voters)
+	//{
+	//	renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, null, county.rejected_voters, county);
+	//}
+	//else
+	//{
 		var wa_voter_db = req.app.get('app_settings').wa_voter_db;
 		wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
 			county.rejected_voters = voters;
 			renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, err, voters, county);
 		});
-	}
+	//}
 
 });
 
