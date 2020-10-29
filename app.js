@@ -36,7 +36,7 @@ var app_settings = {
 	faqs:[
 		{
 			q: 'When can I expect the next ballot update?',
-			a: 'The public data released by the state of washington elections is made available to use weekdays at about 5pm.  We grab that data as soon as we see it, and usually have our updates done by about 6 or 7 pm for the evening.'
+			a: 'The public data released by the State of Washington Elections is made available to everyone on weekdays at about 5pm.  We grab that data as soon as we see it, and usually have our updates done by about 6 or 7 pm for the evening.'
 		},
 		{
 			q: 'How does VoteWashington.info get this information?',
