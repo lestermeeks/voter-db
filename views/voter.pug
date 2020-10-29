@@ -95,10 +95,6 @@ block content
 						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' +voter.county.toLowerCase()+'/name/'+voter.lname.toLowerCase())
 							span Same Last Name:
 							span.float-right #{voter.lname}
-					if (voter && voter.county && voter.zip && voter.street)
-						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' + voter.county.toLowerCase() + '/street/'+voter.zip.toLowerCase()+'/'+voter.street.toLowerCase())
-							span Same Street:
-							span.float-right #{voter.street}
 					if (voter && voter.county && voter.pc)
 						a.list-group-item.list-group-item-action.text-primary(href='/voter/wa/' + voter.county.toLowerCase() + '/precinct/'+voter.pc.toLowerCase())
 							span Same Precinct
