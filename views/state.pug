@@ -26,9 +26,7 @@ block content
 				else
 					.list-group-item.text-center.text-primary
 						span No Current Election Stats
-				a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
-					span About VoteWashington.info
-					span.fa.fa-chevron-right.float-right
+
 			.card.mb-2
 				.card-header
 					.card-title
@@ -46,7 +44,31 @@ block content
 							input.form-control(type='text', placeholder='last name' name='lname')
 						button.btn.btn-primary.btn-block(type='submit') Search
 
+			.card.mb-2
+				.card-header.text-center
+					.card-title
+						h5 Learn More
+				.list-group.list-group-flush
+							 
+					a.list-group-item.list-group-item-action.list-group-item-success(target="_blank" href="https://voter.votewa.gov/" )
+						strong Check Official State Ballot Status at VoteWA.gov
+						span.fa.fa-external-link-alt.float-right
 
+					a.list-group-item.list-group-item-action.list-group-item-success(target="_blank" href="https://www.sos.wa.gov/elections/research/ballot-status-codes.aspx" )
+						span Learn more about your ballot status directly from the elections team!
+						span.fa.fa-external-link-alt.float-right
+					//a.list-group-item.list-group-item-action.text-primary(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
+						span Share your voting record on Facebook
+						span.fa.fa-external-link-alt.float-right
+
+
+					a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/wa")
+						span Search for other Washington state voters!
+						span.fa.fa-chevron-right.float-right
+
+					a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
+						span About VoteWashington.info
+						span.fa.fa-chevron-right.float-right
 
 
 			//.card.mb-2

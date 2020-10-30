@@ -3,30 +3,58 @@ extends layout
 block content
 
 	if county
-		.card.mb-2
-			.card-header.text-center
-				.card-title
-					h4.text-center #{county.name} County Ballot Counts By Status
+		.row
+			.col-md
+				.card.mb-2
+					.card-header.text-center
+						.card-title
+							h4.text-center #{county.name} County Ballot Counts By Status
 				
-			.list-group.list-group-flush.primary-text
-				if county.accepted_ballots
-					- var accepted_percent = (county.accepted_ballots/county.b_count * 100).toFixed(1);
-					.list-group-item.disabled.text-primary
-						span Accepted Ballots:
-						span.float-right #{county.accepted_ballots} (#{accepted_percent}%)
-				if county.received_ballots
-					- var received_percent = (county.received_ballots/county.b_count * 100).toFixed(1);
-					.list-group-item.disabled.text-primary
-						span Received Ballots:
-						span.float-right #{county.received_ballots} (#{received_percent}%)
-				if county.rejected_ballots
-					- var rejected_percent = (county.rejected_ballots/county.b_count * 100).toFixed(1);
-					.list-group-item.disabled.text-primary
-						span Challenged Ballots:
-						span.float-right #{county.rejected_ballots} (#{rejected_percent}%)
-			.card-footer.text-center
-				small In these reports, "rejected" is a temporary term (in many cases) that means the ballot is being challenged. Most challenged ballots have until the day before certification to be cured with the proper form. The County Canvassing Boards, which meet on November 24, are the only authority that can officially reject a ballot.  Contact your county auditor for questions about your ballot.
-	
+					.list-group.list-group-flush.primary-text
+						if county.accepted_ballots
+							- var accepted_percent = (county.accepted_ballots/county.b_count * 100).toFixed(1);
+							.list-group-item.disabled.text-primary
+								span Accepted Ballots:
+								span.float-right #{county.accepted_ballots} (#{accepted_percent}%)
+						if county.received_ballots
+							- var received_percent = (county.received_ballots/county.b_count * 100).toFixed(1);
+							.list-group-item.disabled.text-primary
+								span Received Ballots:
+								span.float-right #{county.received_ballots} (#{received_percent}%)
+						if county.rejected_ballots
+							- var rejected_percent = (county.rejected_ballots/county.b_count * 100).toFixed(1);
+							.list-group-item.disabled.text-primary
+								span Challenged Ballots:
+								span.float-right #{county.rejected_ballots} (#{rejected_percent}%)
+					.card-footer.text-center
+						small In these reports, "rejected" is a temporary term (in many cases) that means the ballot is being challenged. Most challenged ballots have until the day before certification to be cured with the proper form. The County Canvassing Boards, which meet on November 24, are the only authority that can officially reject a ballot.  Contact your county auditor for questions about your ballot.
+			.col-md
+				.card.mb-2
+					.card-header.text-center
+						.card-title
+							h5 Learn More
+					.list-group.list-group-flush
+							 
+						a.list-group-item.list-group-item-action.list-group-item-success(target="_blank" href="https://voter.votewa.gov/" )
+							strong Check Official State Ballot Status at VoteWA.gov
+							span.fa.fa-external-link-alt.float-right
+
+						a.list-group-item.list-group-item-action.list-group-item-success(target="_blank" href="https://www.sos.wa.gov/elections/research/ballot-status-codes.aspx" )
+							span Learn more about your ballot status directly from the elections team!
+							span.fa.fa-external-link-alt.float-right
+						//a.list-group-item.list-group-item-action.text-primary(target="_blank" href="https://www.facebook.com/sharer/sharer.php?u="+ fullUrl )
+							span Share your voting record on Facebook
+							span.fa.fa-external-link-alt.float-right
+
+
+						a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/wa")
+							span Search for other Washington state voters!
+							span.fa.fa-chevron-right.float-right
+
+						a.list-group-item.list-group-item-action.text-primary(role="button", href="/voter/about")
+							span About VoteWashington.info
+							span.fa.fa-chevron-right.float-right
+
 	.card
 		.card-header.text-center
 			.card-title
