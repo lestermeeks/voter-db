@@ -34,34 +34,7 @@ var app_settings = {
 	db_counts: {},
 	faq_index: 0,
 	faqs:[
-		{
-			q: 'What is votewashington.info?',
-			a: 'votewashington.info is a non-partisan, self-funded, and publicly available tool started in 2018 that aggregates official state ballot data released to the public by the Washington Secretary of State to provide Washington citizens with user-friendly access to public voter information. Our goal is to both improve voter turnout and empower citizens as a community to identify and fix challenged ballots as quickly as possible. We believe we are accomplishing that goal. We are not an official State of Washington entity and we encourage everyone to always check their ballot status directly at voter.votewa.gov for the most up to date information.'
-		},
-		{
-			q: 'Who are you?',
-			a: 'We are two Washington computer nerds who love data and wanted to make elections better and more transparent and give average citizens easy access to the same public data used by political insiders and lobbyists.'
-		},
-		{
-			q: 'How does votewashington.info get this information?',
-			a: 'Once a month the State of Washington releases a complete registered voter list if requested. This data is processed into the format you see on our tool. During the last 2 weeks of an election the state also releases public daily ballot status updates which we pull into the site. All data reported comes directly from sos.wa.gov. That data is found at https://www.sos.wa.gov/elections/research/"'
-		},
-		{
-			q: 'When can I expect a ballot update?',
-			a: 'The public data released by the State of Washington is made available to everyone on weekdays at about 5pm. We grab that data as soon as we see it, and usually have our updates done by about 6 or 7 pm for the evening.'
-		},
-		{
-			q: 'What about the Secretary of State\'s statements regarding votewashington?',
-			a: 'Washington State and the nation as a whole is currently especially focused on ensuring a fair and legitimate election. That is a good thing. With that for context, the Secretary of State\'s office reported our site to the Cybersecurity and Infrastructure Agency for vetting and put out a statement warning voters that we were not an official site. While we were disappointed to be flagged so quickly in this way, we have since met with both the Cybersecurity and Infrastructure Agency and the Washington Secretary of State\'s office directly to clear things up. Lines of communication are wide open with both agencies and we’ve already implemented their suggestions for our tool. We commend Washington for having one of the most transparent and efficient election processes in the country. We stand by the publicly accessible data we use on the site. We are proud of our tool and believe it will result in higher voter turnout and more challenged ballots ultimately being counted.'
-		},
-		{
-			q: 'What about all those challenged ballots?',
-			a: 'Yes, the numbers look scary, but the percentage of challenged ballots is right in line with past elections in our state and many will be cleared up by certification time by our county auditors. With our tool and the power of community, we hope even more ballots will count. You can find the report on historical election rejection rates at https://www.sos.wa.gov/_assets/elections/research/2018%20report%20of%20elections%20(eavs%20edition).pdf'
-		},
-		{
-			q: 'What\'s in it for you guys?',
-			a: 'Not a damn thing but stress and a whole lot of lost time...and hopefully a pretty powerful and useful tool for all of Washington'
-		},
+
 	],
 	//current_last_seen: "10/31/2018",
 	//current_election: "2020-03-10",
