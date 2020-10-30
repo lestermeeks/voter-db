@@ -35,20 +35,32 @@ var app_settings = {
 	faq_index: 0,
 	faqs:[
 		{
-			q: 'When can I expect the next ballot update?',
-			a: 'The public data released by the State of Washington Elections is made available to everyone on weekdays at about 5pm.  We grab that data as soon as we see it, and usually have our updates done by about 6 or 7 pm for the evening.'
+			q: 'What is votewashington.info?',
+			a: 'votewashington.info is a non-partisan, self-funded, and publicly available tool started in 2018 that aggregates official state ballot data released to the public by the Washington Secretary of State to provide Washington citizens with user-friendly access to public voter information. Our goal is to both improve voter turnout and empower citizens as a community to identify and fix challenged ballots as quickly as possible. We believe we are accomplishing that goal. We are not an official State of Washington entity and we encourage everyone to always check their ballot status directly at voter.votewa.gov for the most up to date information.'
 		},
 		{
-			q: 'How does VoteWashington.info get this information?',
-			a: 'Once a month the state releases a complete registered voter list if requested.  I process this list into the format you see here.  During the last 2 weeks of an election the state also releases daily ballot status updates, and I pull them in when released and update the site daily.'
+			q: 'Who are you?',
+			a: 'We are two Washington computer nerds who love data and wanted to make elections better and more transparent and give average citizens easy access to the same public data used by political insiders and lobbyists.'
 		},
 		{
-			q: 'How does a voter know what the election checkers are using to verify the validity of their signature?',
-			a: 'The first signature used to compare a ballot to is the person\'s voter registration. The secondary signature is the one from the Department of Licensing (driver license, state ID). Sometimes those are the same if the person registered to vote when they renew their license. The auditor\'s office collects signatures from multiple areas in the voter file. During the Canvassing Board for the Primary I noticed on the screen that the signature being used to compare came from the Corrections system. Absolutely every effort is made to get a cast ballot counted.'
+			q: 'How does votewashington.info get this information?',
+			a: 'Once a month the State of Washington releases a complete registered voter list if requested. This data is processed into the format you see on our tool. During the last 2 weeks of an election the state also releases public daily ballot status updates which we pull into the site. All data reported comes directly from sos.wa.gov. That data is found at https://www.sos.wa.gov/elections/research/"'
 		},
 		{
-			q: 'Assuming that a voter mails or drops their ballot in the ballot box by 8 p.m. on election night, how long does a voter have to correct any issues with the rejection of their ballot?',
-			a: 'Any ballot that is postmarked or received by November 3rd has the opportunity to be counted. If the ballot arriving at the last minute is challenged the voter has until just before the election is certified to rehabilitate their signature. This election the Canvassing Board meets on the 23rd of November. A voter has until then to fix any problems with their otherwise eligible ballot.'
+			q: 'When can I expect a ballot update?',
+			a: 'The public data released by the State of Washington is made available to everyone on weekdays at about 5pm. We grab that data as soon as we see it, and usually have our updates done by about 6 or 7 pm for the evening.'
+		},
+		{
+			q: 'What about the Secretary of State\'s statements regarding votewashington?',
+			a: 'Washington State and the nation as a whole is currently especially focused on ensuring a fair and legitimate election. That is a good thing. With that for context, the Secretary of State\'s office reported our site to the Cybersecurity and Infrastructure Agency for vetting and put out a statement warning voters that we were not an official site. While we were disappointed to be flagged so quickly in this way, we have since met with both the Cybersecurity and Infrastructure Agency and the Washington Secretary of State\'s office directly to clear things up. Lines of communication are wide open with both agencies and we’ve already implemented their suggestions for our tool. We commend Washington for having one of the most transparent and efficient election processes in the country. We stand by the publicly accessible data we use on the site. We are proud of our tool and believe it will result in higher voter turnout and more challenged ballots ultimately being counted.'
+		},
+		{
+			q: 'What about all those challenged ballots?',
+			a: 'Yes, the numbers look scary, but the percentage of challenged ballots is right in line with past elections in our state and many will be cleared up by certification time by our county auditors. With our tool and the power of community, we hope even more ballots will count. You can find the report on historical election rejection rates at https://www.sos.wa.gov/_assets/elections/research/2018%20report%20of%20elections%20(eavs%20edition).pdf'
+		},
+		{
+			q: 'What\'s in it for you guys?',
+			a: 'Not a damn thing but stress and a whole lot of lost time...and hopefully a pretty powerful and useful tool for all of Washington'
 		},
 	],
 	//current_last_seen: "10/31/2018",
