@@ -16,10 +16,10 @@ block content
 						h5 This voter is not an active voter record.
 
 				else if voter.ballot && voter.ballot.status == 'Rejected'
-					.card-body.bg-danger.text-light.text-center
+					.card-body.bg-warning.text-light.text-center
 						h4 #{voter.fname} #{voter.mname} #{voter.lname}
 						h6 (Ballot #{voter.ballot.status} on #{voter.ballot.sdate})
-						h6 Auditor Comment: #{voter.ballot.comment}
+						h6 Challenge Reason: #{voter.ballot.comment}
 						p
 						h5 Oh No!  I looks like your ballot needs some help.  Check with your county elections officials to learn what you can do about it!
 
@@ -31,7 +31,7 @@ block content
 							
 							h6 (Ballot #{voter.ballot.status} on #{voter.ballot.sdate})
 							if(voter.ballot.comment  && voter.ballot.status != 'Accepted')
-								h6 Auditor Comment: #{voter.ballot.comment}
+								h6 Challenge Reason: #{voter.ballot.comment}
 							h5 Thank You For Voting!
 						else
 							h5 We are still waiting for your ballot!

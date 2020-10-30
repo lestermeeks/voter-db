@@ -42,7 +42,7 @@ block content
 							.ml-2.small City: #{voter.city}
 							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
-							//.ml-2.small Auditor Comment: #{voter.ballot.comment}
+							//.ml-2.small Challenge Reason: #{voter.ballot.comment}
 
 					else if voter.ballot.status == "Received"
 						a.list-group-item.list-group-item-action.list-group-item-warning(href='/voter/wa/id/'+voter._id.toLowerCase()) 
@@ -51,8 +51,8 @@ block content
 							.ml-2.small City: #{voter.city}
 							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
-							if(voter.ballot.comment)
-								.ml-2.small Auditor Comment: #{voter.ballot.comment}
+							//if(voter.ballot.comment)
+							//	.ml-2.small Challenge Reason: #{voter.ballot.comment}
 
 					else if voter.ballot.status == "Rejected"
 						a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
@@ -62,7 +62,7 @@ block content
 							.ml-2.small Voter Status: #{voter.status}
 							.ml-2.small Ballot Status: #{voter.ballot.status} on #{voter.ballot.sdate}
 							if(voter.ballot.comment)
-								.ml-2.small Auditor Comment: #{voter.ballot.comment}
+								.ml-2.small Challenge Reason: #{voter.ballot.comment}
 				else
 					a.list-group-item.list-group-item-action(href='/voter/wa/id/'+voter._id.toLowerCase()) 
 						h3.fa.fa-fw.float-right
