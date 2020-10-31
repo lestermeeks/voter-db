@@ -403,27 +403,57 @@ router.get('/wa/:county_code/ballot/:ballot_status', function(req,res){
 	var county_code = req.params.county_code.trim().toUpperCase();
 	var ballot_status = req.params.ballot_status.trim().toUpperCase();
 
-	var county = { code:"XX", name:"Unknown"};
-  	app_settings.stats.counties.forEach(function(county_loop){
-  		if(county_loop.code == county_code){
-  			county = county_loop;
-  		}
-  	});
+	if(ballot_status == 'REJECTED')
+	{
+		
+	}
 
-	//if(county.rejected_voters)
-	//{
-	//	renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, null, county.rejected_voters, county);
-	//}
-	//else
-	//{
-		var wa_voter_db = req.app.get('app_settings').wa_voter_db;
-		wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
-			county.rejected_voters = voters;
-			renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, err, voters, county);
-		});
-	//}
+	switch(ballot_status)
+	{
+		case 'CHALLENGED':
+		case 'ACCEPTED':
+		case 'RECEIVED':
+		{
+			if(ballot_status == 'CHALLENGED')
+			{
+				ballot_status = 'REJECTED';
+			}
+			var county = { code:"XX", name:"Unknown"};
+  			app_settings.stats.counties.forEach(function(county_loop){
+  				if(county_loop.code == county_code){
+  					county = county_loop;
+  				}
+  			});
+
+			var wa_voter_db = req.app.get('app_settings').wa_voter_db;
+			wa_voter_db.collection('voter').find({status:'ACTIVE', county:county_code, bstatus:ballot_status}).sort({lname:1,fname:1}).toArray(function(err, voters) {
+
+				if(ballot_status == 'REJECTED')
+					ballot_status = 'CHALLENGED';
+
+
+				//county.rejected_voters = voters;
+				renderVoterResponse( county_code + ' County Ballot Status: ' + ballot_status , req, res, err, voters, county);
+			});
+		}
+		break;
+
+		case 'REJECTED':
+			res.redirect(301, '/voter/wa/' + county_code + '/ballot/challenged');
+		break;
+		
+		default:
+			res.redirect(301, '/voter/wa/' + county_code );
+		break;
+
+	}
+
+
+
 
 });
+
+
 
 /* GET home page. */
 router.get('/wa/:county_code', function(req, res, next) {

@@ -61,13 +61,17 @@ function getBallotStatus(voter)
 
 //determine voter status for all voters
 function setVoterStatus(voters, elections) {
-    if(voters){
-
-        if(!voters.isArray)
+    //console.log('setVoterStatus: ' + JSON.stringify(voters));
+	if(voters){
+		//console.log('setVoterStatus: voters first' + JSON.stringify(voters) + '\r\n');	
+        if(!Array.isArray(voters))
             voters = [voters];
+
 
         voters.forEach(function(voter, index, voters)
         {
+			//console.log('setVoterStatus: voter after' + JSON.stringify(voter) + '\r\n');
+			//console.log('setVoterStatus: voter' + JSON.stringify(voter) + '\r\n');
             voter._elections_past = [];
             if(elections){
                 elections.forEach(function(election, e_idx, elections){
@@ -82,7 +86,16 @@ function setVoterStatus(voters, elections) {
             //voter._election_current = findElectionStatus('2018-08-07', voter);
             //voter._election_current = findElectionStatus('2018-11-06', voter);
             //voter._ballot_status = getBallotStatus(voter);
-            
+
+			if(voter.ballot)
+			{
+				//console.log("Ballot Status: " + voter.ballot.status);
+				if(voter.ballot.status == 'Rejected')
+				{
+				
+					voter.ballot.status = 'Challenged';
+				}
+			}
             //setup comparison
             var new_cutoff_date = new Date(2018,1);
             var reg_date = new Date(voter.reg);

@@ -15,7 +15,7 @@ block content
 						p
 						h5 This voter is not an active voter record.
 
-				else if voter.ballot && voter.ballot.status == 'Rejected'
+				else if voter.ballot && voter.ballot.status == 'Challenged'
 					.card-body.bg-warning.text-light.text-center
 						h4 #{voter.fname} #{voter.mname} #{voter.lname}
 						h6 (Ballot #{voter.ballot.status} on #{voter.ballot.sdate})

@@ -82,7 +82,7 @@ block content
 							//if(voter.ballot.comment)
 							//	.ml-2.small Challenge Reason: #{voter.ballot.comment}
 
-					else if voter.ballot.status == "Rejected"
+					else if voter.ballot.status == "Challenged"
 						a.list-group-item.list-group-item-action.list-group-item-danger(href='/voter/wa/id/'+voter._id.toLowerCase()) 
 							h3.fa.fa-thumbs-down.fa-fw.float-right
 							.ml-0 #{voter.lname}, #{voter.fname} #{voter.mname}
